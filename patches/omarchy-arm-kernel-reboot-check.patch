@@ -1,0 +1,36 @@
+--- a/bin/omarchy-update-restart
++++ b/bin/omarchy-update-restart
+@@ -19,12 +19,32 @@
+   fi
+ }
+ 
++kernel_is_packaged() {
++  local kernel="$1" image_package
++
++  if pacman -Qo "$kernel" &>/dev/null; then
++    return 0
++  fi
++
++  # Arch Linux ARM's metadata shim copies the package-owned Image into the
++  # module directory. Require identical bytes and matching package ownership
++  # of the image and module metadata before accepting that generated copy.
++  # The shim preserves the FAT image's root-only mode. Reuse the updater's
++  # sudo authorization without prompting; failure keeps the conservative warning.
++  if [[ $(uname -m) == "aarch64" ]] && { cmp -s "$kernel" /boot/Image || sudo -n cmp -s "$kernel" /boot/Image; } 2>/dev/null; then
++    image_package=$(pacman -Qqo /boot/Image 2>/dev/null) || return 1
++    [[ -n $image_package && $image_package == "$(pacman -Qqo "$(dirname "$kernel")/modules.builtin" 2>/dev/null)" ]]
++  else
++    return 1
++  fi
++}
++
+ if [[ $mode != "--services-only" ]]; then
+   running_kernel=$(uname -r)
+   kernel_updated=true
+ 
+   for kernel in /usr/lib/modules/*/vmlinuz; do
+-    if [[ -f $kernel ]] && pacman -Qo "$kernel" &>/dev/null; then
++    if [[ -f $kernel ]] && kernel_is_packaged "$kernel"; then
+       installed_kernel=$(basename "$(dirname "$kernel")")
+ 
+       if [[ $installed_kernel == $running_kernel ]]; then

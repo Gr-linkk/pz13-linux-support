@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: MIT
+# This owner-private payload includes sensor initialization and tuning data.
+pkgname=pz13-camera-local
+pkgver=2026.10.11
+pkgrel=1
+pkgdesc='Local ASUS PZ13 colour-camera application and reviewed drivers'
+arch=('aarch64')
+license=('LicenseRef-Mixed-Private-Payload')
+depends=('python' 'python-gobject' 'gtk3' 'gstreamer' 'gst-plugins-good' 'gst-plugin-gtk'
+         'gst-plugin-libcamera' 'libcamera' 'libcamera-ipa' 'v4l-utils'
+         'systemd' 'acl' 'libnotify' 'util-linux' 'wireplumber')
+options=('!strip' '!debug')
+source=('payload.tar')
+sha256sums=('@PAYLOAD_SHA256@')
+noextract=('payload.tar')
+backup=('etc/udev/rules.d/70-pz13-camera.rules'
+        'etc/systemd/system/pz13-camera.service'
+        'etc/systemd/user/wireplumber.service.d/50-pz13-camera.conf')
+
+package() {
+  bsdtar -xpf "$srcdir/payload.tar" -C "$pkgdir"
+}

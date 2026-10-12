@@ -1,0 +1,544 @@
+diff --git i/include/libcamera/internal/software_isp/software_isp.h w/include/libcamera/internal/software_isp/software_isp.h
+index 4f72dce..2cc887f 100644
+--- i/include/libcamera/internal/software_isp/software_isp.h
++++ w/include/libcamera/internal/software_isp/software_isp.h
+@@ -39,6 +39,7 @@ namespace libcamera {
+ class Debayer;
+ class FrameBuffer;
+ class PixelFormat;
++class Pz13Af;
+ class Stream;
+ struct StreamConfiguration;
+ 
+@@ -47,7 +48,7 @@ LOG_DECLARE_CATEGORY(SoftwareIsp)
+ class SoftwareIsp : public Object
+ {
+ public:
+-	SoftwareIsp(PipelineHandler *pipe, const CameraSensor *sensor,
++	SoftwareIsp(PipelineHandler *pipe, CameraSensor *sensor,
+ 		    ControlInfoMap *ipaControls);
+ 	~SoftwareIsp();
+ 
+@@ -73,7 +74,7 @@ public:
+ 	void processStats(const uint32_t frame, const uint32_t bufferId,
+ 			  const ControlList &sensorControls);
+ 
+-	int start();
++	int start(const ControlList *controls = nullptr);
+ 	void stop();
+ 
+ 	void queueRequest(const uint32_t frame, const ControlList &controls);
+@@ -94,12 +95,16 @@ private:
+ 	void statsReady(uint32_t frame, uint32_t bufferId);
+ 	void inputReady(FrameBuffer *input);
+ 	void outputReady(FrameBuffer *output);
++	void focusSample(uint64_t timestamp, double score, double luma, double scene);
++	void applyFocusControls(const ControlList &controls);
+ 	std::unique_ptr<Debayer> debayer_;
+ 	Thread ispWorkerThread_;
+ 	SharedMemObject<DebayerParams> sharedParams_;
+ 	DebayerParams debayerParams_;
+ 	DmaBufAllocator dmaHeap_;
+ 	bool ccmEnabled_;
++	CameraSensor *sensor_;
++	std::unique_ptr<Pz13Af> af_;
+ 
+ 	std::unique_ptr<ipa::soft::IPAProxySoft> ipa_;
+ 	std::deque<FrameBuffer *> queuedInputBuffers_;
+diff --git i/src/ipa/simple/algorithms/adjust.cpp w/src/ipa/simple/algorithms/adjust.cpp
+index 8bf39c4..a7a0774 100644
+--- i/src/ipa/simple/algorithms/adjust.cpp
++++ w/src/ipa/simple/algorithms/adjust.cpp
+@@ -8,6 +8,8 @@
+ 
+ #include "adjust.h"
+ 
++#include <cmath>
++
+ #include <libcamera/base/log.h>
+ #include <libcamera/base/utils.h>
+ 
+@@ -24,10 +26,15 @@ constexpr float kDefaultSaturation = 1.0f;
+ 
+ LOG_DEFINE_CATEGORY(IPASoftAdjust)
+ 
+-int Adjust::init(IPAContext &context, [[maybe_unused]] const ValueNode &tuningData)
++int Adjust::init(IPAContext &context, const ValueNode &tuningData)
+ {
++	defaultGamma_ = tuningData["gamma"].get<float>().value_or(kDefaultGamma);
++	if (!std::isfinite(defaultGamma_) || defaultGamma_ < .1f || defaultGamma_ > 10.f) {
++		LOG(IPASoftAdjust, Error) << "Invalid default gamma in tuning file";
++		return -EINVAL;
++	}
+ 	context.ctrlMap[&controls::Gamma] =
+-		ControlInfo(0.1f, 10.0f, kDefaultGamma);
++		ControlInfo(0.1f, 10.0f, defaultGamma_);
+ 	context.ctrlMap[&controls::Contrast] =
+ 		ControlInfo(0.0f, 2.0f, kDefaultContrast);
+ 	if (context.ccmEnabled)
+@@ -39,7 +46,7 @@ int Adjust::init(IPAContext &context, [[maybe_unused]] const ValueNode &tuningDa
+ int Adjust::configure(IPAContext &context,
+ 		      [[maybe_unused]] const IPAConfigInfo &configInfo)
+ {
+-	context.activeState.knobs.gamma = kDefaultGamma;
++	context.activeState.knobs.gamma = defaultGamma_;
+ 	context.activeState.knobs.contrast = std::optional<float>();
+ 	context.activeState.knobs.saturation = std::optional<float>();
+ 
+diff --git i/src/ipa/simple/algorithms/adjust.h w/src/ipa/simple/algorithms/adjust.h
+index 49c1f26..4176c90 100644
+--- i/src/ipa/simple/algorithms/adjust.h
++++ w/src/ipa/simple/algorithms/adjust.h
+@@ -43,6 +43,7 @@ public:
+ 
+ private:
+ 	void applySaturation(Matrix<float, 3, 3> &ccm, float saturation);
++	float defaultGamma_ = kDefaultGamma;
+ };
+ 
+ } /* namespace ipa::soft::algorithms */
+diff --git i/src/libcamera/pipeline/simple/simple.cpp w/src/libcamera/pipeline/simple/simple.cpp
+index e26f438..e2bf5cf 100644
+--- i/src/libcamera/pipeline/simple/simple.cpp
++++ w/src/libcamera/pipeline/simple/simple.cpp
+@@ -1627,7 +1627,7 @@ int SimplePipelineHandler::exportFrameBuffers(Camera *camera, Stream *stream,
+ 		return data->video_->exportBuffers(count, buffers);
+ }
+ 
+-int SimplePipelineHandler::start(Camera *camera, [[maybe_unused]] const ControlList *controls)
++int SimplePipelineHandler::start(Camera *camera, const ControlList *controls)
+ {
+ 	SimpleCameraData *data = cameraData(camera);
+ 	V4L2VideoDevice *video = data->video_;
+@@ -1685,7 +1685,7 @@ int SimplePipelineHandler::start(Camera *camera, [[maybe_unused]] const ControlL
+ 		if (data->converter_)
+ 			ret = data->converter_->start();
+ 		else if (data->swIsp_)
+-			ret = data->swIsp_->start();
++			ret = data->swIsp_->start(controls);
+ 		else
+ 			ret = 0;
+ 
+diff --git i/src/libcamera/software_isp/debayer_cpu.cpp w/src/libcamera/software_isp/debayer_cpu.cpp
+index 49382b4..115834c 100644
+--- i/src/libcamera/software_isp/debayer_cpu.cpp
++++ w/src/libcamera/software_isp/debayer_cpu.cpp
+@@ -10,6 +10,7 @@
+  */
+ 
+ #include "debayer_cpu.h"
++#include "pz13_focus_measure.h"
+ 
+ #include <algorithm>
+ #include <stdlib.h>
+@@ -17,6 +18,8 @@
+ #include <utility>
+ 
+ #include <linux/dma-buf.h>
++#include <libyuv/scale_argb.h>
++#include <libyuv/convert_from_argb.h>
+ 
+ #include <libcamera/base/thread.h>
+ 
+@@ -92,8 +95,9 @@ DebayerCpuThread::DebayerCpuThread(DebayerCpu *debayer, unsigned int threadIndex
+  * \param[in] stats Pointer to the stats object to use
+  * \param[in] cm The camera manager
+  */
+-DebayerCpu::DebayerCpu(std::unique_ptr<SwStatsCpu> stats, const CameraManager &cm)
+-	: Debayer(cm), stats_(std::move(stats))
++DebayerCpu::DebayerCpu(std::unique_ptr<SwStatsCpu> stats, const CameraManager &cm,
++		       bool fullField, bool focusStats)
++	: Debayer(cm), stats_(std::move(stats)), fullField_(fullField), focusStats_(focusStats)
+ {
+ 	/*
+ 	 * Reading from uncached buffers may be very slow.
+@@ -702,6 +706,57 @@ int DebayerCpu::configure(const StreamConfiguration &inputCfg,
+ 		    ~(inputConfig_.patternSize.height - 1);
+ 	window_.width = outputCfg.size.width;
+ 	window_.height = outputCfg.size.height;
++	renderStride_ = outputCfg.stride;
++	targetSize_ = outputCfg.size;
++	DebayerOutputConfig pixelConfig;
++	if (getOutputConfig(outputCfg.pixelFormat, pixelConfig))
++		return -EINVAL;
++	pixelBytes_ = pixelConfig.bpp / 8;
++	renderPixelBytes_ = pixelBytes_;
++	fullFieldBuffer_.clear();
++	scaledBuffer_.clear();
++	scaleLevels_.clear();
++	if (fullField_ && outputCfg.size != outSizeRange.max) {
++		/* Preserve the sensor field independently of the app's preview size.
++		 * Keep outputConfig_ unchanged: it describes the application's buffer.
++		 */
++		window_ = Rectangle(outSizeRange.max);
++		window_.x = ((inputCfg.size.width - window_.width) / 2) &
++			    ~(inputConfig_.patternSize.width - 1);
++		window_.y = ((inputCfg.size.height - window_.height) / 2) &
++			    ~(inputConfig_.patternSize.height - 1);
++		/* Scale packed 32-bit pixels directly. RGBScale expands the entire
++		 * 13 MP image on every frame and is prohibitively slow on this board.
++		 * Strip alpha only after resizing when the client requests 24-bit RGB.
++		 */
++		if (pixelBytes_ == 3) {
++			PixelFormat renderFormat = outputCfg.pixelFormat == formats::RGB888
++				? formats::XRGB8888 : formats::XBGR8888;
++			if (setDebayerFunctions(inputCfg.pixelFormat, renderFormat, ccmEnabled))
++				return -EINVAL;
++			renderPixelBytes_ = 4;
++			scaledBuffer_.resize(size_t(targetSize_.width) * targetSize_.height * 4);
++		}
++		renderStride_ = window_.width * renderPixelBytes_;
++		fullFieldBuffer_.resize(size_t(renderStride_) * window_.height);
++		Size fit = targetSize_;
++		fit.height = uint64_t(fit.width) * window_.height / window_.width;
++		if (fit.height > targetSize_.height) {
++			fit.height = targetSize_.height;
++			fit.width = uint64_t(fit.height) * window_.width / window_.height;
++		}
++		fit.width = std::max(fit.width, 1U);
++		fit.height = std::max(fit.height, 1U);
++		/* Arbitrary-ratio ARGB scaling uses bilinear filtering. Reduce in
++		 * half-size steps first so small previews average the native pixels,
++		 * instead of aliasing Bayer noise and fine text into coloured dots.
++		 */
++		Size level = window_.size();
++		while (level.width / 2 >= fit.width && level.height / 2 >= fit.height) {
++			level = Size(level.width / 2, level.height / 2);
++			scaleLevels_.push_back({ level, std::vector<uint8_t>(size_t(level.width) * level.height * 4) });
++		}
++	}
+ 
+ 	/*
+ 	 * Set the stats window to the whole processed window. Its coordinates are
+@@ -845,7 +900,7 @@ void DebayerCpuThread::process(uint32_t frame, const uint8_t *src, uint8_t *dst)
+ 	src += (window.y + yStart_) * debayer_->inputConfig_.stride +
+ 	       window.x * debayer_->inputConfig_.bpp / 8;
+ 	/* Adjust dst for yStart_ */
+-	dst += yStart_ * debayer_->outputConfig_.stride;
++	dst += yStart_ * debayer_->renderStride_;
+ 
+ 	if (debayer_->inputConfig_.patternSize.height == 2)
+ 		process2(frame, src, dst);
+@@ -860,7 +915,7 @@ void DebayerCpuThread::process(uint32_t frame, const uint8_t *src, uint8_t *dst)
+ 
+ void DebayerCpuThread::process2(uint32_t frame, const uint8_t *src, uint8_t *dst)
+ {
+-	unsigned int outputStride = debayer_->outputConfig_.stride;
++	unsigned int outputStride = debayer_->renderStride_;
+ 	unsigned int inputStride = debayer_->inputConfig_.stride;
+ 	Rectangle &window = debayer_->window_;
+ 	unsigned int yEnd = yEnd_;
+@@ -926,7 +981,7 @@ void DebayerCpuThread::process2(uint32_t frame, const uint8_t *src, uint8_t *dst
+ 
+ void DebayerCpuThread::process4(uint32_t frame, const uint8_t *src, uint8_t *dst)
+ {
+-	unsigned int outputStride = debayer_->outputConfig_.stride;
++	unsigned int outputStride = debayer_->renderStride_;
+ 	unsigned int inputStride = debayer_->inputConfig_.stride;
+ 
+ 	/*
+@@ -1098,7 +1153,8 @@ void DebayerCpu::process(uint32_t frame, FrameBuffer *input, FrameBuffer *output
+ 	for (auto &thread : threads_)
+ 		thread->invokeMethod(&DebayerCpuThread::process,
+ 				     ConnectionTypeQueued, frame,
+-				     in.planes()[0].data(), out.planes()[0].data());
++				     in.planes()[0].data(), fullFieldBuffer_.empty()
++					     ? out.planes()[0].data() : fullFieldBuffer_.data());
+ 
+ 	{
+ 		MutexLocker locker(workPendingMutex_);
+@@ -1107,7 +1163,59 @@ void DebayerCpu::process(uint32_t frame, FrameBuffer *input, FrameBuffer *output
+ 		});
+ 	}
+ 
+-	metadata.planes()[0].bytesused = out.planes()[0].size();
++	if (focusStats_ && frame % 3 == 0 && metadata.status == FrameMetadata::FrameSuccess) {
++		auto measure = pz13FocusMeasure(fullFieldBuffer_.empty()
++				? out.planes()[0].data() : fullFieldBuffer_.data(),
++			window_.width, window_.height, renderStride_, renderPixelBytes_,
++			swapRedBlueGains_);
++		focusStatsReady.emit(metadata.timestamp, measure.score, measure.luma, measure.scene);
++	}
++	if (!fullFieldBuffer_.empty()) {
++		/* Fit without stretching or hiding the field. Letterbox when the
++		 * requested aspect ratio differs from the sensor's aspect ratio.
++		 */
++		unsigned int width = targetSize_.width;
++		unsigned int height = uint64_t(width) * window_.height / window_.width;
++		if (height > targetSize_.height) {
++			height = targetSize_.height;
++			width = uint64_t(height) * window_.width / window_.height;
++		}
++		width = std::max(width, 1U);
++		height = std::max(height, 1U);
++		uint8_t *dst = out.planes()[0].data();
++		std::fill(dst, dst + outputConfig_.frameSize, 0);
++		if (pixelBytes_ == 4)
++			for (unsigned int y = 0; y < targetSize_.height; ++y)
++				for (unsigned int x = 0; x < targetSize_.width; ++x)
++					dst[y * outputConfig_.stride + 4 * x + 3] = 255;
++		dst += ((targetSize_.height - height) / 2) * outputConfig_.stride +
++		       ((targetSize_.width - width) / 2) * pixelBytes_;
++		uint8_t *scaled = pixelBytes_ == 4 ? dst : scaledBuffer_.data();
++		unsigned int scaledStride = pixelBytes_ == 4 ? outputConfig_.stride : width * 4;
++		const uint8_t *source = fullFieldBuffer_.data();
++		Size sourceSize = window_.size();
++		unsigned int sourceStride = renderStride_;
++		int ret = 0;
++		for (auto &level : scaleLevels_) {
++			ret = libyuv::ARGBScale(source, sourceStride, sourceSize.width,
++				sourceSize.height, level.pixels.data(), level.size.width * 4,
++				level.size.width, level.size.height, libyuv::kFilterBox);
++			if (ret) break;
++			source = level.pixels.data();
++			sourceSize = level.size;
++			sourceStride = level.size.width * 4;
++		}
++		if (!ret)
++			ret = libyuv::ARGBScale(source, sourceStride, sourceSize.width,
++				sourceSize.height, scaled, scaledStride,
++				width, height, libyuv::kFilterBox);
++		if (!ret && pixelBytes_ == 3)
++			ret = libyuv::ARGBToRGB24(scaled, scaledStride, dst,
++				outputConfig_.stride, width, height);
++		if (ret)
++			metadata.status = FrameMetadata::FrameError;
++	}
++	metadata.planes()[0].bytesused = outputConfig_.frameSize;
+ 
+ 	dmaSyncers.clear();
+ 
+diff --git i/src/libcamera/software_isp/debayer_cpu.h w/src/libcamera/software_isp/debayer_cpu.h
+index 5281c65..00eec18 100644
+--- i/src/libcamera/software_isp/debayer_cpu.h
++++ w/src/libcamera/software_isp/debayer_cpu.h
+@@ -32,7 +32,8 @@ class DebayerCpuThread;
+ class DebayerCpu : public Debayer
+ {
+ public:
+-	DebayerCpu(std::unique_ptr<SwStatsCpu> stats, const CameraManager &cm);
++	DebayerCpu(std::unique_ptr<SwStatsCpu> stats, const CameraManager &cm,
++		   bool fullField = false, bool focusStats = false);
+ 	~DebayerCpu();
+ 
+ 	int configure(const StreamConfiguration &inputCfg,
+@@ -47,6 +48,7 @@ public:
+ 	void stop() override;
+ 	SizeRange sizes(PixelFormat inputFormat, const Size &inputSize) override;
+ 	const SharedFD &getStatsFD() override { return stats_->getStatsFD(); }
++	Signal<uint64_t, double, double, double> focusStatsReady;
+ 
+ private:
+ 	friend class DebayerCpuThread;
+@@ -156,6 +158,19 @@ private:
+ 	Rectangle window_;
+ 	std::unique_ptr<SwStatsCpu> stats_;
+ 	unsigned int xShift_; /* Offset of 0/1 applied to window_.x */
++	bool fullField_;
++	bool focusStats_;
++	unsigned int renderStride_;
++	unsigned int pixelBytes_;
++	unsigned int renderPixelBytes_;
++	Size targetSize_;
++	std::vector<uint8_t> fullFieldBuffer_;
++	std::vector<uint8_t> scaledBuffer_;
++	struct ScaleLevel {
++		Size size;
++		std::vector<uint8_t> pixels;
++	};
++	std::vector<ScaleLevel> scaleLevels_;
+ 
+ 	static constexpr unsigned int kMinThreads = 1;
+ 	static constexpr unsigned int kMaxThreads = 8;
+diff --git i/src/libcamera/software_isp/meson.build w/src/libcamera/software_isp/meson.build
+index 15f9e40..e53ff48 100644
+--- i/src/libcamera/software_isp/meson.build
++++ w/src/libcamera/software_isp/meson.build
+@@ -9,6 +9,8 @@ if not softisp_enabled
+     subdir_done()
+ endif
+ 
++libcamera_deps += cc.find_library('yuv', required : true)
++
+ libegl = dependency('egl', required : get_option('softisp-gpu'))
+ libglesv2 = dependency('glesv2', required : get_option('softisp-gpu'))
+ mesa_works = cc.check_header('EGL/egl.h',
+diff --git i/src/libcamera/software_isp/software_isp.cpp w/src/libcamera/software_isp/software_isp.cpp
+index c73a16c..8780b6b 100644
+--- i/src/libcamera/software_isp/software_isp.cpp
++++ w/src/libcamera/software_isp/software_isp.cpp
+@@ -8,6 +8,10 @@
+ #include "libcamera/internal/software_isp/software_isp.h"
+ 
+ #include <memory>
++#include <fstream>
++#include <array>
++#include <time.h>
++#include <linux/v4l2-controls.h>
+ #include <optional>
+ #include <stdint.h>
+ #include <string>
+@@ -28,6 +32,7 @@
+ #include "libcamera/internal/software_isp/debayer_params.h"
+ 
+ #include "debayer_cpu.h"
++#include "pz13_af.h"
+ #if HAVE_DEBAYER_EGL
+ #include "debayer_egl.h"
+ #endif
+@@ -79,13 +84,15 @@ LOG_DEFINE_CATEGORY(SoftwareIsp)
+  * \param[out] ipaControls The IPA controls to update
+  * handler
+  */
+-SoftwareIsp::SoftwareIsp(PipelineHandler *pipe, const CameraSensor *sensor,
++SoftwareIsp::SoftwareIsp(PipelineHandler *pipe, CameraSensor *sensor,
+ 			 ControlInfoMap *ipaControls)
+ 	: ispWorkerThread_("SWIspWorker"),
+ 	  dmaHeap_(DmaBufAllocator::DmaBufAllocatorFlag::CmaHeap |
+ 		   DmaBufAllocator::DmaBufAllocatorFlag::SystemHeap |
+ 		   DmaBufAllocator::DmaBufAllocatorFlag::UDmaBuf)
+ {
++	sensor_ = sensor;
++	bool rearFocus = false;
+ 	if (!dmaHeap_.isValid()) {
+ 		LOG(SoftwareIsp, Error) << "Failed to create DmaBufAllocator object";
+ 		return;
+@@ -129,8 +136,23 @@ SoftwareIsp::SoftwareIsp(PipelineHandler *pipe, const CameraSensor *sensor,
+ 	}
+ 
+ #endif
+-	if (!debayer_)
+-		debayer_ = std::make_unique<DebayerCpu>(std::move(stats), cm);
++	if (!debayer_) {
++		std::ifstream modelFile("/proc/device-tree/model");
++		std::string model;
++		std::getline(modelFile, model, '\0');
++		std::ifstream layoutFile("/proc/device-tree/pz13,camera-test-layout");
++		std::string layout;
++		std::getline(layoutFile, layout, '\0');
++		bool pz13 = model == "ASUS Proart PZ13" && layout == "dual-v1" &&
++			(sensor->model() == "ov5675" || sensor->model() == "ov13858");
++		auto focus = sensor->controls().find(V4L2_CID_FOCUS_ABSOLUTE);
++		rearFocus = pz13 && sensor->model() == "ov13858" && focus != sensor->controls().end() &&
++			focus->second.min().get<int32_t>() == 265 && focus->second.max().get<int32_t>() == 508;
++		auto cpu = std::make_unique<DebayerCpu>(std::move(stats), cm, pz13, rearFocus);
++		if (rearFocus)
++			cpu->focusStatsReady.connect(this, &SoftwareIsp::focusSample);
++		debayer_ = std::move(cpu);
++	}
+ 
+ 	debayer_->inputBufferReady.connect(this, &SoftwareIsp::inputReady);
+ 	debayer_->outputBufferReady.connect(this, &SoftwareIsp::outputReady);
+@@ -170,10 +192,38 @@ SoftwareIsp::SoftwareIsp(PipelineHandler *pipe, const CameraSensor *sensor,
+ 		return;
+ 	}
+ 
++	if (rearFocus) {
++		af_ = std::make_unique<Pz13Af>([this]() {
++			const std::array<uint32_t, 1> ids{ V4L2_CID_FOCUS_ABSOLUTE };
++			auto values = sensor_->getControls(ids);
++			return values.contains(V4L2_CID_FOCUS_ABSOLUTE)
++				? values.get(V4L2_CID_FOCUS_ABSOLUTE).get<int32_t>() : -1;
++		}, [this](int position) {
++			ControlList values(sensor_->controls());
++			values.set(V4L2_CID_FOCUS_ABSOLUTE, static_cast<int32_t>(position));
++			return sensor_->setControls(&values) == 0;
++		});
++		ControlInfoMap::Map info(ipaControls->begin(), ipaControls->end());
++		const std::array<ControlValue, 2> modes{ int32_t(controls::AfModeAuto), int32_t(controls::AfModeContinuous) };
++		const std::array<ControlValue, 2> pauses{ int32_t(controls::AfPauseImmediate), int32_t(controls::AfPauseResume) };
++		info.emplace(&controls::AfMode, ControlInfo(modes, int32_t(controls::AfModeAuto)));
++		info.emplace(&controls::AfTrigger, ControlInfo(controls::AfTriggerValues));
++		info.emplace(&controls::AfPause, ControlInfo(pauses));
++		info.emplace(&controls::AfState, ControlInfo(int32_t(controls::AfStateIdle), int32_t(controls::AfStateFailed)));
++		info.emplace(&controls::AfPauseState, ControlInfo(int32_t(controls::AfPauseStateRunning), int32_t(controls::AfPauseStatePaused)));
++		*ipaControls = ControlInfoMap(std::move(info), controls::controls);
++	}
+ 	ipa_->setIspParams.connect(this, &SoftwareIsp::saveIspParams);
+ 	ipa_->metadataReady.connect(this,
+ 				    [this](uint32_t frame, const ControlList &metadata) {
+-					    metadataReady.emit(frame, metadata);
++					    ControlList result = metadata;
++					    if (af_) {
++						    result.set(controls::AfMode, af_->mode());
++						    result.set(controls::AfState, int32_t(af_->state()));
++						    result.set(controls::AfPauseState, af_->paused()
++							    ? controls::AfPauseStatePaused : controls::AfPauseStateRunning);
++					    }
++					    metadataReady.emit(frame, result);
+ 				    });
+ 	ipa_->setSensorControls.connect(this, &SoftwareIsp::setSensorCtrls);
+ 
+@@ -331,6 +381,7 @@ int SoftwareIsp::exportBuffers(const Stream *stream, unsigned int count,
+  */
+ void SoftwareIsp::queueRequest(const uint32_t frame, const ControlList &controls)
+ {
++	applyFocusControls(controls);
+ 	ipa_->queueRequest(frame, controls);
+ }
+ 
+@@ -375,8 +426,13 @@ int SoftwareIsp::queueBuffers(uint32_t frame, FrameBuffer *input,
+  * \brief Starts the Software ISP streaming operation
+  * \return 0 on success, any other value indicates an error
+  */
+-int SoftwareIsp::start()
++int SoftwareIsp::start(const ControlList *controls)
+ {
++	if (af_) {
++		af_->start();
++		if (controls)
++			applyFocusControls(*controls);
++	}
+ 	int ret = ipa_->start();
+ 	if (ret)
+ 		return ret;
+@@ -395,6 +451,11 @@ int SoftwareIsp::start()
+  */
+ void SoftwareIsp::stop()
+ {
++	/* Cancel before draining worker messages: no queued sample may move a
++	 * lens during teardown. The sensor driver parks it on stream-off.
++	 */
++	if (af_)
++		af_->stop();
+ 	debayer_->invokeMethod(&Debayer::stop,
+ 			       ConnectionTypeBlocking);
+ 
+@@ -438,9 +499,37 @@ void SoftwareIsp::saveIspParams()
+ 
+ void SoftwareIsp::setSensorCtrls(const ControlList &sensorControls)
+ {
++	if (af_ && af_->holdingExposure())
++		return;
+ 	setSensorControls.emit(sensorControls);
+ }
+ 
++void SoftwareIsp::applyFocusControls(const ControlList &controls)
++{
++	if (!af_) return;
++	if (auto mode = controls.get(controls::AfMode)) af_->mode(*mode);
++	if (af_->mode() == controls::AfModeAuto) {
++		if (auto trigger = controls.get(controls::AfTrigger)) {
++			if (*trigger == controls::AfTriggerStart) af_->trigger();
++			else if (*trigger == controls::AfTriggerCancel) af_->cancel();
++		}
++	} else if (auto pause = controls.get(controls::AfPause)) {
++		if (*pause == controls::AfPauseImmediate) af_->pause(true);
++		else if (*pause == controls::AfPauseResume) af_->pause(false);
++	}
++}
++
++void SoftwareIsp::focusSample(uint64_t timestamp, double score, double luma, double scene)
++{
++	if (!af_) return;
++	timespec now;
++	clock_gettime(CLOCK_MONOTONIC, &now);
++	auto before = af_->state();
++	af_->sample(timestamp / 1e9, now.tv_sec + now.tv_nsec / 1e9, score, luma, scene);
++	if (before != af_->state())
++		LOG(SoftwareIsp, Info) << "PZ13 autofocus state " << af_->state();
++}
++
+ void SoftwareIsp::statsReady(uint32_t frame, uint32_t bufferId)
+ {
+ 	ispStatsReady.emit(frame, bufferId);

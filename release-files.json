@@ -1,0 +1,491 @@
+{
+  "schema": 1,
+  "files": {
+    ".gitattributes": {
+      "license": "MIT"
+    },
+    ".github/workflows/checks.yml": {
+      "license": "MIT"
+    },
+    ".gitignore": {
+      "license": "MIT"
+    },
+    "AGENTS.md": {
+      "license": "MIT"
+    },
+    "CONTRIBUTING.md": {
+      "license": "MIT"
+    },
+    "LICENSE": {
+      "license": "license-text"
+    },
+    "LICENSES/ALSA-BSD-3-Clause.txt": {
+      "license": "license-text"
+    },
+    "LICENSES/BSD-3-Clause.txt": {
+      "license": "license-text"
+    },
+    "LICENSES/CC0-1.0.txt": {
+      "license": "license-text"
+    },
+    "LICENSES/GPL-2.0-only.txt": {
+      "license": "license-text"
+    },
+    "LICENSES/GPL-3.0-only.txt": {
+      "license": "license-text"
+    },
+    "LICENSES/LGPL-2.1-or-later.txt": {
+      "license": "license-text"
+    },
+    "LICENSES/MIT.txt": {
+      "license": "license-text"
+    },
+    "LICENSES/Omarchy-MIT.txt": {
+      "license": "license-text"
+    },
+    "NOTICE.md": {
+      "license": "MIT"
+    },
+    "README.md": {
+      "license": "MIT"
+    },
+    "archive/live-image/README.md": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/build-container-compat.sh": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/live-overlay/etc/mkinitcpio.conf.d/zz-pz13-tether.conf": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/live-overlay/etc/ssh/sshd_config": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/live-overlay/etc/systemd/network/10-pz13-tether.network": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/live-overlay/etc/systemd/system/pz13-collect.service": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/live-overlay/etc/systemd/system/pz13-collect.timer": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/live-overlay/root/.automated_script.sh": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/live-overlay/usr/local/bin/pz13-collect": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/live-uki-pz13.sh": {
+      "license": "MIT"
+    },
+    "archive/live-image/configs/local-repo-config.sh": {
+      "license": "MIT"
+    },
+    "archive/live-image/scripts/build-live.sh": {
+      "license": "MIT"
+    },
+    "archive/live-image/scripts/build-local-packages.sh": {
+      "license": "MIT"
+    },
+    "archive/live-image/scripts/fetch-build-sources.py": {
+      "license": "MIT"
+    },
+    "archive/live-image/scripts/make-fat32-image.py": {
+      "license": "MIT"
+    },
+    "archive/live-image/scripts/prepare.py": {
+      "license": "MIT"
+    },
+    "archive/live-image/scripts/verify-image.py": {
+      "license": "MIT"
+    },
+    "assets.example.json": {
+      "license": "MIT"
+    },
+    "audio/pz13-audio-init": {
+      "license": "MIT"
+    },
+    "audio/pz13-audio.service": {
+      "license": "MIT"
+    },
+    "audio/ucm/PZ13/HiFi.conf": {
+      "license": "BSD-3-Clause"
+    },
+    "audio/ucm/PZ13/PZ13.conf": {
+      "license": "BSD-3-Clause"
+    },
+    "board/camera-additions.json": {
+      "license": "GPL-2.0-only"
+    },
+    "board/patch-pz13-gpu-dtb.py": {
+      "license": "MIT"
+    },
+    "board/prepare-pz13-audio-test.py": {
+      "license": "MIT"
+    },
+    "board/prepare-pz13-bluetooth-test.py": {
+      "license": "MIT"
+    },
+    "board/prepare-pz13-pen-test.py": {
+      "license": "MIT"
+    },
+    "boot.example.json": {
+      "license": "MIT"
+    },
+    "boot/05-pz13-update-guard.hook": {
+      "license": "MIT"
+    },
+    "boot/80-limine-efi-deploy.hook": {
+      "license": "MIT"
+    },
+    "boot/99-omarchy-limine.hook": {
+      "license": "MIT"
+    },
+    "boot/pz13-update-guard": {
+      "license": "MIT"
+    },
+    "boot/zz-pz13-menu.conf": {
+      "license": "MIT"
+    },
+    "boot/zz-pz13-update-check.hook": {
+      "license": "MIT"
+    },
+    "camera/app/pz13-camera-launch": {
+      "license": "MIT"
+    },
+    "camera/app/pz13-camera-service.py": {
+      "license": "MIT"
+    },
+    "camera/app/pz13-camera.py": {
+      "license": "MIT"
+    },
+    "camera/app/score-pz13-camera-focus.py": {
+      "license": "MIT"
+    },
+    "camera/config/50-pz13-camera.conf": {
+      "license": "MIT"
+    },
+    "camera/config/70-pz13-camera.rules": {
+      "license": "MIT"
+    },
+    "camera/config/PKGBUILD.in": {
+      "license": "MIT"
+    },
+    "camera/config/org.local.PZ13Camera.desktop": {
+      "license": "MIT"
+    },
+    "camera/config/pz13-camera.service": {
+      "license": "MIT"
+    },
+    "camera/drivers/Makefile": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/Makefile": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-340.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-4-1.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-4-7.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-680.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-gen1.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-gen2.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-gen2.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-gen3.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid-gen3.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csid.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csiphy-2ph-1-0.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csiphy-3ph-1-0.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csiphy.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-csiphy.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-format.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-format.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-ispif.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-ispif.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-tpg-gen1.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-tpg.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-tpg.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-17x.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-340.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-4-1.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-4-7.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-4-8.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-480.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-680.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-gen1.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-gen1.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-gen3.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-vbif.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe-vbif.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-vfe.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-video.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss-video.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/camss.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/camss/pz13-dual-tree-guard.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/pz13-camera-lifecycle.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/pz13-dual-tree-guard.h": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/pz13_cci_dual_test.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/pz13_front_dual_test.c": {
+      "license": "GPL-2.0-only"
+    },
+    "camera/drivers/pz13_rear_dual_test.c": {
+      "license": "GPL-2.0-only"
+    },
+    "docs/audio.md": {
+      "license": "MIT"
+    },
+    "docs/board.md": {
+      "license": "MIT"
+    },
+    "docs/cameras.md": {
+      "license": "MIT"
+    },
+    "docs/hardware-status.md": {
+      "license": "MIT"
+    },
+    "docs/keyboard.md": {
+      "license": "MIT"
+    },
+    "docs/power.md": {
+      "license": "MIT"
+    },
+    "docs/private-inputs.md": {
+      "license": "MIT"
+    },
+    "docs/recovery.md": {
+      "license": "MIT"
+    },
+    "docs/release-checks.md": {
+      "license": "MIT"
+    },
+    "docs/source-layout.md": {
+      "license": "MIT"
+    },
+    "docs/start-here.md": {
+      "license": "MIT"
+    },
+    "keyboard/pz13-hotkeys.conf": {
+      "license": "GPL-3.0-only"
+    },
+    "keyboard/pz13-hotkeys.py": {
+      "license": "GPL-3.0-only"
+    },
+    "keyboard/pz13-hotkeys.service": {
+      "license": "GPL-3.0-only"
+    },
+    "keyboard/pz13-keyboard-init.py": {
+      "license": "GPL-3.0-only"
+    },
+    "packages/libcamera-pz13/60-pz13-libcamera.conf": {
+      "license": "MIT"
+    },
+    "packages/libcamera-pz13/PKGBUILD.in": {
+      "license": "MIT"
+    },
+    "packages/libcamera-pz13/libcamera.patch": {
+      "license": "LGPL-2.1-or-later AND CC0-1.0"
+    },
+    "packages/libcamera-pz13/pz13_af.h": {
+      "license": "LGPL-2.1-or-later"
+    },
+    "packages/libcamera-pz13/pz13_focus_measure.h": {
+      "license": "LGPL-2.1-or-later"
+    },
+    "packages/libcamera-pz13/test-af.cpp": {
+      "license": "LGPL-2.1-or-later"
+    },
+    "packages/pz13-support/PKGBUILD.in": {
+      "license": "MIT"
+    },
+    "patches/README.md": {
+      "license": "MIT"
+    },
+    "patches/hid-over-i2c-reset-delays.patch": {
+      "license": "GPL-2.0-only"
+    },
+    "patches/i2c-qcom-cci-reset-completion.patch": {
+      "license": "GPL-2.0-only"
+    },
+    "patches/omarchy-arm-kernel-reboot-check.patch": {
+      "license": "MIT"
+    },
+    "power/pz13-power-menu": {
+      "license": "MIT"
+    },
+    "power/pz13-resume-time": {
+      "license": "MIT"
+    },
+    "release-files.json": {
+      "license": "MIT"
+    },
+    "scripts/build-pz13-support.py": {
+      "license": "MIT"
+    },
+    "scripts/decode-pz13-aop-config.py": {
+      "license": "MIT"
+    },
+    "scripts/decode-pz13-camera-colour.py": {
+      "license": "MIT"
+    },
+    "scripts/decode-qcom-aeob.py": {
+      "license": "MIT"
+    },
+    "scripts/decode-qcom-sensor-metadata.py": {
+      "license": "MIT"
+    },
+    "scripts/export-pz13-support.py": {
+      "license": "MIT"
+    },
+    "scripts/prepare-pz13-front-capture-table.py": {
+      "license": "MIT"
+    },
+    "scripts/prepare-pz13-libcamera.py": {
+      "license": "MIT"
+    },
+    "scripts/prepare-pz13-rear-capture-table.py": {
+      "license": "MIT"
+    },
+    "scripts/test-pz13-camera-focus.py": {
+      "license": "MIT"
+    },
+    "source-provenance.json": {
+      "license": "MIT"
+    },
+    "tests/run": {
+      "license": "MIT"
+    },
+    "tests/test-arm-reboot-check.py": {
+      "license": "MIT"
+    },
+    "tests/test-camera-lifecycle.c": {
+      "license": "GPL-2.0-only"
+    },
+    "tests/test_public_builds.py": {
+      "license": "MIT"
+    },
+    "tests/test_public_tools.py": {
+      "license": "MIT"
+    },
+    "tools/check-boot-image.py": {
+      "license": "MIT"
+    },
+    "tools/check-public-tree.py": {
+      "license": "MIT"
+    },
+    "tools/prepare-board.py": {
+      "license": "MIT"
+    },
+    "tools/prepare-camera-build.py": {
+      "license": "MIT"
+    },
+    "tools/prepare-camera-package.py": {
+      "license": "MIT"
+    },
+    "tools/prepare-lens-header.py": {
+      "license": "MIT"
+    },
+    "tools/prepare-libcamera-package.py": {
+      "license": "MIT"
+    },
+    "tools/pz13-status.py": {
+      "license": "MIT"
+    },
+    "tools/pz13_assets.py": {
+      "license": "MIT"
+    },
+    "tools/verify-uki.py": {
+      "license": "MIT"
+    }
+  }
+}

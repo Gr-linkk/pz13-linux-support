@@ -1,0 +1,24 @@
+diff --git a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
+--- a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
++++ b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
+@@ -41,10 +41,19 @@ properties:
+     description: HID descriptor address
+     $ref: /schemas/types.yaml#/definitions/uint32
+ 
++  reset-gpios:
++    description: GPIO controlling the device's reset line.
++    maxItems: 1
++
+   panel: true
+   post-power-on-delay-ms:
+     description: Time required by the device after enabling its regulators
+       or powering it on, before it is ready for communication.
+ 
++  post-reset-deassert-delay-ms:
++    description: Time required after deasserting reset before communicating
++      with the device. This is separate from the delay before releasing reset.
++    $ref: /schemas/types.yaml#/definitions/uint32
++
+   touchscreen-inverted-x: true
+ 
+   touchscreen-inverted-y: true

@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+# Preserve unified-diff context prefixes and exact upstream license text.
+*.patch -whitespace
+LICENSES/* -whitespace

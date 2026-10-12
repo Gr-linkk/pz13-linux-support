@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+# Grant the active local session access to the non-contiguous CPU ISP heap.
+# Other DMA heaps retain their system permissions.
+SUBSYSTEM=="dma_heap", KERNEL=="system", TAG+="uaccess"

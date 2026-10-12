@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+# Called by pacman hooks; the normal Omarchy Update interface stays unchanged.
+set -euo pipefail
+[[ $EUID == 0 ]]
+case ${1:-} in before|after) ;; *) exit 2 ;; esac
+phase=$1
+state=/var/lib/pz13-update
+install -d -m 0755 "$state"
+failure() {
+    printf '%s\n' "$phase check failed at $(date -Is); review the update log before rebooting." > "$state/needs-review"
+    chmod 0644 "$state/needs-review"
+    if [[ $phase == before ]]; then
+        printf '\nPZ13 recovery checks failed. This package transaction will be stopped.\n' >&2
+    else
+        printf '\nPZ13 boot checks failed after package changes. Review the update log before rebooting.\n' >&2
+    fi
+}
+trap failure ERR
+[[ $(uname -m) == aarch64 ]]
+[[ $(tr -d '\0' </proc/device-tree/model) == 'ASUS Proart PZ13' ]]
+if [[ $(findmnt -rn -M / -o FSTYPE) != btrfs || $(findmnt -rn -M / -o FSROOT) != /@ ]]; then
+    printf 'PZ13 updates require the normal Omarchy installation. Reboot out of the recovery snapshot first.\n' >&2
+    false
+fi
+expected_boot=$(python3 -c 'import json; print(json.load(open("/etc/pz13/boot.json"))["boot_uuid"])')
+[[ -n $expected_boot && $expected_boot != null && $(findmnt -rn -M /boot -o UUID) == "$expected_boot" ]]
+sha256sum --quiet -c /usr/local/lib/pz13/hardware.sha256
+[[ -s /boot/EFI/BOOT/BOOTAA64.EFI ]]
+cmp /usr/share/limine/BOOTAA64.EFI /boot/EFI/BOOT/BOOTAA64.EFI
+cmp /usr/share/limine/BOOTAA64.EFI /boot/EFI/limine/limine_aa64.efi
+python3 /usr/local/lib/pz13/check-boot-image.py /boot/EFI/Linux/omarchy_linux-aarch64.efi --config /etc/pz13/boot.json
+
+if [[ $phase == before ]]; then
+    [[ $(df --output=avail -B1 /boot | tail -1) -gt 314572800 ]]
+    snapshot=$(snapper -c root create --print-number --cleanup-algorithm number \
+        --description 'PZ13 before package changes')
+    [[ $snapshot =~ ^[0-9]+$ && $snapshot -gt 0 ]]
+    [[ -d /.snapshots/$snapshot/snapshot/usr/lib/modules ]]
+    cmp /usr/local/lib/pz13/board.dtb "/.snapshots/$snapshot/snapshot/usr/local/lib/pz13/board.dtb"
+    limine-snapper-sync
+    grep -Fq ".snapshots/$snapshot/" /boot/limine.conf
+    limine-snapper-info
+    printf '%s\n' "$snapshot" > "$state/last-pre-update-snapshot"
+    printf 'PZ13 recovery snapshot %s verified.\n' "$snapshot"
+fi
+rm -f -- "$state/needs-review"
+date -Is > "$state/last-$phase-check"

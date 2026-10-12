@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: MIT
+# ARM replacement for the distribution's x86 Limine copy hook.
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = limine
+
+[Action]
+Description = Deploying the ARM Omarchy Limine loader after upgrade...
+When = PostTransaction
+Exec = /usr/bin/cp /usr/share/limine/BOOTAA64.EFI /boot/EFI/limine/limine_aa64.efi

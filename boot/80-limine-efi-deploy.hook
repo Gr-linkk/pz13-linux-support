@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: MIT
+# PZ13 firmware does not expose writable EFI variables to Linux.
+# This /etc override retains the package's triggers and fallback deployment.
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = limine
+Target = limine-git
+Target = limine-dev
+Target = limine-mkinitcpio-hook
+Target = limine-mkinitcpio-hook-git
+
+[Action]
+Description = Deploying Limine using the PZ13 fallback boot path...
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/limine-apple-gate --not-mac /usr/bin/limine-install --no-efi-register --fallback

@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: MIT
+[Desktop Entry]
+Type=Application
+Name=PZ13 Camera
+Comment=Front and rear camera, photos, video and focus
+Exec=/usr/local/bin/pz13-camera
+Icon=camera-photo
+Terminal=false
+Categories=AudioVideo;Video;Photography;

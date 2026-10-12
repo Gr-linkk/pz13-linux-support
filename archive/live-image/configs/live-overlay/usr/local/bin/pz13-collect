@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+# Writes only to /run (RAM). Copy the resulting archive to another machine or
+# an explicitly mounted USB filesystem before powering off.
+set -euo pipefail
+umask 077
+out=/run/pz13
+mkdir -p "$out/current"
+exec 9>"$out/collect.lock"
+flock -n 9 || exit 0
+capture() {
+  local name=$1
+  shift
+  "$@" > "$out/current/$name.txt" 2>&1 || true
+}
+capture kernel dmesg
+capture journal journalctl -b --no-pager -o short-monotonic
+capture system uname -a
+capture addresses ip -brief address
+capture routes ip route
+capture network networkctl --no-pager status
+capture usb lsusb
+capture storage lsblk -o NAME,SIZE,MODEL,TRAN,TYPE,MOUNTPOINTS
+capture services systemctl --failed --no-pager
+capture command-line cat /proc/cmdline
+if [[ -r /proc/device-tree/model ]]; then
+  tr '\0' '\n' < /proc/device-tree/model > "$out/current/model.txt"
+fi
+if [[ -r /proc/device-tree/compatible ]]; then
+  tr '\0' '\n' < /proc/device-tree/compatible > "$out/current/compatible.txt"
+fi
+tar -C "$out" -czf "$out/diagnostics.tar.gz.tmp" current
+mv "$out/diagnostics.tar.gz.tmp" "$out/diagnostics.tar.gz"
+printf '%s\n' "Logs: $out/diagnostics.tar.gz (RAM; copy before power-off)"

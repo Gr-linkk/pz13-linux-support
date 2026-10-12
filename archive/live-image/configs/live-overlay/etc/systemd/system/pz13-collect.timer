@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+[Unit]
+Description=Refresh PZ13 diagnostics in RAM
+
+[Timer]
+OnBootSec=20s
+OnUnitActiveSec=30s
+
+[Install]
+WantedBy=timers.target

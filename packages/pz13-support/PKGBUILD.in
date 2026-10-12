@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: MIT
+# Private package for this owner's installed PZ13; payload is not distributed.
+pkgname=pz13-support-local
+pkgver=2026.10.10
+pkgrel=1
+pkgdesc='Tested local ASUS PZ13 hardware, boot and update integration'
+arch=('aarch64')
+license=('LicenseRef-Mixed-Private-Payload')
+depends=('bash' 'python' 'alsa-ucm-conf' 'alsa-utils' 'systemd' 'mkinitcpio'
+         'limine-mkinitcpio-hook' 'limine-snapper-sync' 'snapper' 'pz13-camera-local>=2026.10.10')
+options=('!strip' '!debug')
+source=('payload.tar')
+sha256sums=('@PAYLOAD_SHA256@')
+noextract=('payload.tar')
+backup=(@BACKUP_PATHS@)
+
+package() {
+  bsdtar -xpf "$srcdir/payload.tar" -C "$pkgdir"
+}

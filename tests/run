@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+set -euo pipefail
+cd -- "$(dirname -- "$0")/.."
+export PYTHONDONTWRITEBYTECODE=1
+python3 -B tools/check-public-tree.py --source-only
+python3 -B -m unittest discover -s tests -p 'test_public*.py' -v
+python3 -B - <<'PY'
+import ast
+from pathlib import Path
+for path in Path('.').rglob('*.py'):
+    if not any(part in ('.build', '.git', '.cache') for part in path.parts):
+        ast.parse(path.read_text(), filename=path.as_posix())
+print('Python source syntax passed.')
+PY
+for task_script in camera/app/pz13-camera-launch audio/pz13-audio-init boot/pz13-update-guard archive/live-image/scripts/*.sh archive/live-image/configs/*.sh; do
+  bash -n "$task_script"
+done
+bash -n packages/libcamera-pz13/PKGBUILD.in
+bash -n camera/config/PKGBUILD.in
+bash -n packages/pz13-support/PKGBUILD.in
+task_tmp=$(mktemp -d)
+trap 'rm -rf -- "$task_tmp"' EXIT
+clang++ -std=c++20 -O2 -Wall -Wextra -Werror -fsanitize=address,undefined \
+  packages/libcamera-pz13/test-af.cpp -o "$task_tmp/test-af"
+"$task_tmp/test-af"
+clang -std=c11 -D_DEFAULT_SOURCE -Wall -Wextra -Werror -pthread -fsanitize=address,undefined \
+  tests/test-camera-lifecycle.c -o "$task_tmp/test-lifecycle"
+"$task_tmp/test-lifecycle"
+if [[ ${1:-} != --core ]]; then
+  python3 -B scripts/test-pz13-camera-focus.py
+fi
+printf '%s\n' 'Public source checks passed. Hardware operation requires separate physical acceptance.'

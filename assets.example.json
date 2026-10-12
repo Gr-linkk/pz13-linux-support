@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "files": {
+    "board_base": {"path": null, "sha256": null},
+    "gpu_reference": {"path": null, "sha256": null},
+    "front_mode_header": {"path": null, "sha256": null},
+    "rear_mode_header": {"path": null, "sha256": null},
+    "rear_lens_header": {"path": null, "sha256": null},
+    "front_profile": {"path": null, "sha256": null},
+    "rear_profile": {"path": null, "sha256": null}
+  },
+  "kernel_build": null
+}

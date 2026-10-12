@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-3.0-only
+[Unit]
+Description=ASUS PZ13 keyboard hotkeys and backlight
+After=systemd-modules-load.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -B /usr/local/lib/pz13/pz13-hotkeys.py
+Restart=on-failure
+RestartSec=3
+RestartPreventExitStatus=78
+RuntimeDirectory=pz13-hotkeys
+RuntimeDirectoryMode=0700
+StateDirectory=pz13-hotkeys
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=yes
+CapabilityBoundingSet=CAP_SETUID CAP_SETGID
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectClock=yes
+RestrictAddressFamilies=AF_UNIX
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+DevicePolicy=closed
+DeviceAllow=char-hidraw rw
+DeviceAllow=/dev/uinput rw
+DeviceAllow=/dev/uleds rw
+
+[Install]
+WantedBy=multi-user.target

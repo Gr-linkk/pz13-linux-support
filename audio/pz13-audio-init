@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+# Keep the broad SoundWire blacklist; enable only the reviewed speaker bus.
+set -euo pipefail
+# Check the board wiring and firmware rather than pinning a kernel release.
+# A kernel update must retain these conditions to enable this controller.
+[[ $(uname -m) == aarch64 ]]
+[[ $(tr -d '\0' </proc/device-tree/model) == 'ASUS Proart PZ13' ]]
+[[ $(tr -d '\0' </proc/device-tree/sound/model) == X1E80100-ASUS-Proart-PZ13 ]]
+for node in audio-codec soc@0/soundwire@6ad0000 soc@0/soundwire@6d30000; do
+    [[ $(tr -d '\0' < "/proc/device-tree/$node/status") == disabled ]]
+done
+[[ ! -e /proc/device-tree/sound/wcd-capture-dai-link ]]
+[[ ! -e /proc/device-tree/sound/wcd-playback-dai-link ]]
+controllers=(/sys/bus/platform/devices/*.soundwire)
+[[ ${#controllers[@]} == 1 && ${controllers[0]##*/} == 6b10000.soundwire ]]
+printf '%s  %s\n' \
+    89b731f3f98fc2b84699bca39a56e390925a44a26d5aea80382cf617e00c08d8 \
+    /usr/lib/firmware/updates/qcom/x1e80100/X1E80100-ASUS-Proart-PZ13-tplg.bin \
+    | sha256sum -c -
+exec /usr/bin/modprobe soundwire_qcom

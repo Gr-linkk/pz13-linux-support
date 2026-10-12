@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MIT
+# Dedicated diagnostic image: only the locally generated public key is accepted.
+Port 22
+HostKey /etc/ssh/ssh_host_ed25519_key
+PermitRootLogin prohibit-password
+AuthorizedKeysFile /etc/pz13/authorized_keys
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+UsePAM yes
+AllowUsers root
+X11Forwarding no
+PermitUserEnvironment no
+Subsystem sftp internal-sftp

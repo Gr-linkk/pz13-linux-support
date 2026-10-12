@@ -1,0 +1,39 @@
+Subject: [EXPERIMENTAL] i2c: qcom-cci: initialize reset completions without a bus node
+
+cci_reset() and the reset interrupt use master[0].irq_complete even if
+only i2c-bus@1 is available. Initialize completions for all hardware
+masters before setting up bus adapters or requesting the interrupt.
+
+Prepared against Linux v7.2.9, original source SHA-256:
+9b189c25a295b6093041f659047cf7120d67030e657ba08183e4b3d7fcadc41d
+https://raw.githubusercontent.com/gregkh/linux/v7.2.9/drivers/i2c/busses/i2c-qcom-cci.c
+
+Status: source applicability and native 7.2.9 module build verified;
+hardware untested and unloaded.
+The PZ13 became unreachable during the bus@1-only live experiment. This
+defect is a plausible cause; the recovered journal ends before the probe and
+contains no later failure trace.
+Not installed, submitted upstream, or added to the normal boot.
+
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -520,6 +520,10 @@
+ 	if (!cci->data)
+ 		return -ENOENT;
+ 
++	/* Controller-wide reset uses master 0 even when its bus is absent. */
++	for (i = 0; i < cci->data->num_masters; i++)
++		init_completion(&cci->master[i].irq_complete);
++
+ 	for_each_available_child_of_node_scoped(dev->of_node, child) {
+ 		struct cci_master *master;
+ 		u32 idx;
+@@ -559,7 +563,6 @@
+ 				master->mode = I2C_MODE_FAST_PLUS;
+ 		}
+ 
+-		init_completion(&master->irq_complete);
+ 	}
+ 
+ 	/* Memory */

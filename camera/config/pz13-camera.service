@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: MIT
+[Unit]
+Description=PZ13 colour camera drivers
+After=local-fs.target
+Before=graphical.target systemd-user-sessions.service
+ConditionPathExists=/proc/device-tree/pz13,camera-test-layout
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/python3 /usr/local/lib/pz13-camera/pz13-camera-service.py start
+ExecStop=/usr/bin/python3 /usr/local/lib/pz13-camera/pz13-camera-service.py stop
+TimeoutStartSec=60
+TimeoutStopSec=45
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,721 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "file": "archive/live-image/README.md",
+      "license": "MIT",
+      "source_sha256": "66041ac8cfd6aa5e851d0e610916a6ff01f9f55e3014bddd2c5c0a91cd6781f1",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "01ce94ddbbd34aa59548ba10dd16fc8e0a3e5ddafab4cd6c5c535b8e2ed7fc7d"
+    },
+    {
+      "file": "archive/live-image/configs/build-container-compat.sh",
+      "license": "MIT",
+      "source_sha256": "e72557791a53aff976efbea3d99a48ef9383564cf6ad4ef4f1e0fead8ab2ab31",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "165b1c5c87cd440dd2ed357c21047042096622fc68ede4db675487126c648004"
+    },
+    {
+      "file": "archive/live-image/configs/live-overlay/etc/mkinitcpio.conf.d/zz-pz13-tether.conf",
+      "license": "MIT",
+      "source_sha256": "c3e0415b7c797c1533413835d9ce5dc386991dc57b949cc4df8e5a2c0231fd15",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "9f2c8a9e6d0b54e43d751b5cd65436e77de15b9a62894b537e69ba4dc03aff1b"
+    },
+    {
+      "file": "archive/live-image/configs/live-overlay/etc/ssh/sshd_config",
+      "license": "MIT",
+      "source_sha256": "dfa14df17ec305c5f0ef4c01a0e2fa10a67cf159e60733f057f4dd4142af01cd",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "e53008ec3d44df2d0c1196fe200b327076c8f17913806b98e355fa5f838cda4f"
+    },
+    {
+      "file": "archive/live-image/configs/live-overlay/etc/systemd/network/10-pz13-tether.network",
+      "license": "MIT",
+      "source_sha256": "537e9581f937410a1b8fed5376016b60869a9b1098c8213d87c20d951fbcf266",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "875770f5290f09461c2675dc241ea3fa46374cbfd392118ff1e9b780ffac9b19"
+    },
+    {
+      "file": "archive/live-image/configs/live-overlay/etc/systemd/system/pz13-collect.service",
+      "license": "MIT",
+      "source_sha256": "245cc5fd4df3baf0f1a7d08ed321da9e82774219eb217a4ca0a0e08f84a2aa0a",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "bffad45a33b98f942576eb9b15d0e53b85f62af27b49f3fb567d3a34b1961b08"
+    },
+    {
+      "file": "archive/live-image/configs/live-overlay/etc/systemd/system/pz13-collect.timer",
+      "license": "MIT",
+      "source_sha256": "d0aab8e9636ead18ef4ce0933fd5fe88896384225144f2eb99b0bcd0dcc9e958",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "b5ec97d46e64d44ad00213f1a85007eb51f3e973091f9b5803c9faa9d2e38726"
+    },
+    {
+      "file": "archive/live-image/configs/live-overlay/root/.automated_script.sh",
+      "license": "MIT",
+      "source_sha256": "594a2f858b6a4bd8a4e94f4aa9226aa8d8e0b835780d905839a935a000b2c54b",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "6eb27b15979927fcd10ad5013663ab404dda2eacf6d94940530051c1ad7ef99c"
+    },
+    {
+      "file": "archive/live-image/configs/live-overlay/usr/local/bin/pz13-collect",
+      "license": "MIT",
+      "source_sha256": "f421c0ece65acaaab01ae56a13d11a6625bcf7149fdb11a0956826aaf52c37d0",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "94f365051c3e1bb1ae05874d3ddcdc4921208b5e38cff0dbfa948bca290cfb9c"
+    },
+    {
+      "file": "archive/live-image/configs/live-uki-pz13.sh",
+      "license": "MIT",
+      "source_sha256": "3d9afd434bb02b968de1729c1ddb7ec4dca4d99825c7c045066ae7c1f4f2d2bf",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "e78844ac494090ee66160d213f68da0d499ce914761be5b964419819c5953195"
+    },
+    {
+      "file": "archive/live-image/configs/local-repo-config.sh",
+      "license": "MIT",
+      "source_sha256": "fc3a043c08d546be4a9969c538d634c78b549ff28db9b9c5d794b88d7ddb58e8",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "40e923407176773fe85504e25e9c4592915ec47a1753d19ce1f0eb5fe5e54f4f"
+    },
+    {
+      "file": "archive/live-image/scripts/build-live.sh",
+      "license": "MIT",
+      "source_sha256": "7420bed52a629677a18a5d49d4dfe98b0d345f7b14a4e45538a33825ab831d20",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "571b1fa72e7bc4c68c8f5955fd3507fff4b69fd0fe60e47b4ccb49275351a03c"
+    },
+    {
+      "file": "archive/live-image/scripts/build-local-packages.sh",
+      "license": "MIT",
+      "source_sha256": "752d8e359250a7fa03a1c5f7e60cb2f330a0c145882dae548bd73e1426b17660",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "d2ce554296a2905c14c2786c1d6367e92f4606d94f576f8220db1f157a723e59"
+    },
+    {
+      "file": "archive/live-image/scripts/fetch-build-sources.py",
+      "license": "MIT",
+      "source_sha256": "6e6d89248dc3719f9e5edf34c57b7a0c25dec5ab0ec8538c7da85aa8153db522",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "0510092d2cc773278df2ab06ccf5dd392b300b65f604dc7e73cdcf572c83e62c"
+    },
+    {
+      "file": "archive/live-image/scripts/make-fat32-image.py",
+      "license": "MIT",
+      "source_sha256": "3ba817ae51710c5d9ba3686e764fd5fb3394441cd91d8ef6c9d221e30563086e",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "2603f57920648594fd4341ee04d12cb41a1b172e289bef433bd22a5b8d89560b"
+    },
+    {
+      "file": "archive/live-image/scripts/prepare.py",
+      "license": "MIT",
+      "source_sha256": "6c93edb7d147767ad7a0146799cd5d6e0b7b29eea905c39b822a19228384150d",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "682c8b27eb531cc77088b189448c8c534f4eb1d81a9d01785b1806e327d6b039"
+    },
+    {
+      "file": "archive/live-image/scripts/verify-image.py",
+      "license": "MIT",
+      "source_sha256": "08758a17c4a08ee46e7ea198ad3f71747402f56fac3fa46ec7d3e24e520959c5",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "8552954e4b0fc653df6f7d8e63ec42a9aed0eed40eb403a838f607ac7bcd4055"
+    },
+    {
+      "file": "audio/pz13-audio-init",
+      "license": "MIT",
+      "source_sha256": "c0a5faf3b4f2bcf5bd645a208e5abb62d0866b7cc1ff87cb76187ae5fe30927f",
+      "export_sha256": "f2df09a17f0b41f960c32141f88b9606e86a6a0e5320e9f754f1d8664e5c42a9"
+    },
+    {
+      "file": "audio/pz13-audio.service",
+      "license": "MIT",
+      "source_sha256": "b50ce8fda924f7106e2426be7052490a0dd31f54b9f72cfec5c6c5eef6e02da3",
+      "export_sha256": "f6d1622ff12e767b048f78ecf8c8739bc619b8739b83eb23aa78ba80525d601f"
+    },
+    {
+      "file": "audio/ucm/PZ13/HiFi.conf",
+      "license": "BSD-3-Clause",
+      "source_sha256": "b72d28df9a65bea5da95c07267bedf1f15e6d693c58fb6de5354dc99a666dc68",
+      "export_sha256": "860d108c2df89b899140136ddc174dce5a7863c4b1da4d5a2a875fb48f7a2b21"
+    },
+    {
+      "file": "audio/ucm/PZ13/PZ13.conf",
+      "license": "BSD-3-Clause",
+      "source_sha256": "76639856c988be8a7229280c9cd79bad59a2150a62b5aa5efd38fa30322f929a",
+      "export_sha256": "9b30462ce8f33a92fc875a904c803264fc3672a58c902b5e88f16344a43cd309"
+    },
+    {
+      "file": "board/patch-pz13-gpu-dtb.py",
+      "license": "MIT",
+      "source_sha256": "2ffd5c8563b0dc863bf1218da02cff2b876314346e8a96d41b90324e273151dd",
+      "export_sha256": "f6b4bdd2c7dc8576133b7e43153c1d292907f2545856c2e50fdf2848a44f0854"
+    },
+    {
+      "file": "board/prepare-pz13-audio-test.py",
+      "license": "MIT",
+      "source_sha256": "9ce39e5e7d736be814af34c5572d62595c77fbd7dfd4bc15277d001934ef3113",
+      "export_sha256": "114eb97ff6eae2e8778307f840b503a5f03589b55b90d472988a981d8262533c"
+    },
+    {
+      "file": "board/prepare-pz13-bluetooth-test.py",
+      "license": "MIT",
+      "source_sha256": "ba778ff1a4c628b024a37aa904ed5643e1da37420e5ad8c8ee6d1fa2e837d58d",
+      "export_sha256": "36d578b81a320646bc83c7429d70742826ca60a6f435e20cee7693d7c374822f"
+    },
+    {
+      "file": "board/prepare-pz13-pen-test.py",
+      "license": "MIT",
+      "source_sha256": "2d7613aa38893d35f40f434b28f61cc54b7f12d9a855a258bc86a2d8e1a89f68",
+      "export_sha256": "a7997a68941b35b36d4fc21093843c6fe53cd72f49301bd0395c76277fc6af4d"
+    },
+    {
+      "file": "boot/05-pz13-update-guard.hook",
+      "license": "MIT",
+      "source_sha256": "77a7f0a7590110f2771bfcdbb66b550c0b8fdd799c22669d5696994c4b06c9c8",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "6bf0628c04053bbe1a039fc1004e6af39eccd8aa092f1c9a68554bfaade837e5"
+    },
+    {
+      "file": "boot/80-limine-efi-deploy.hook",
+      "license": "MIT",
+      "source_sha256": "1c9817ab89bdafefbe424b4b17dd93f2a0c4368ffb8e7070667c28c51f6bc22a",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "7dcf64e661ce7829d467dfb4b29ac56698dd6b8fed61b592c81152118f9a82b6"
+    },
+    {
+      "file": "boot/pz13-update-guard",
+      "license": "MIT",
+      "source_sha256": "ceddf9814adb1f6dcd4bd2c70e5308141caacc8493648067b8dc5a1192d58412",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "b13b243470c2283db05b050256a660e746f08ef99e12e2967cb30699742bee68"
+    },
+    {
+      "file": "boot/zz-pz13-menu.conf",
+      "license": "MIT",
+      "source_sha256": "07c41b07ad1cf8bd1246f8f77058d04f2b5b3da753b569a7491492b0d19cbeb2",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "fa54986ed2ccac44670cef06de48e9287a9585ee896350c9c84d5421e84676a8"
+    },
+    {
+      "file": "boot/zz-pz13-update-check.hook",
+      "license": "MIT",
+      "source_sha256": "79e27eb9b5520c313a6c08ae33f8d2b2aa5e4a0ca5697c97d33e13a4ec1fe53d",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "93546c5bd92fbec73a6845e289412f83fc113391fbaa5d321b95e54ef3818a9b"
+    },
+    {
+      "file": "camera/app/pz13-camera-launch",
+      "license": "MIT",
+      "source_sha256": "faa6e34bee3b86182670b5b5273be635b87069fab30ffe8b88ee536c4e142cd3",
+      "export_sha256": "a3e125edd176661bead1423d51428e56ba5599cb43f0373faa1a59e78bc4e9a4"
+    },
+    {
+      "file": "camera/app/pz13-camera-service.py",
+      "license": "MIT",
+      "source_sha256": "e160eff26c0925b2b9e591f2520daceea95b2d72e27daa9f8ca1a015a65df19a",
+      "export_sha256": "6d0f0d5694c9785d142b8e9a42306e10ebdb06f242720b379a234633b22f31dd"
+    },
+    {
+      "file": "camera/app/pz13-camera.py",
+      "license": "MIT",
+      "source_sha256": "32a97f79446d630b11a026ae2f863050b3d65f690e95dd3d9018becf9834518a",
+      "export_sha256": "bb3f1d3696ed868fb0ad53ee2703bdec8fee90a90eb9961f12b94fa87609a510"
+    },
+    {
+      "file": "camera/app/score-pz13-camera-focus.py",
+      "license": "MIT",
+      "source_sha256": "e2877c3193fabb5e242022096148bb61e61a3d0403e48f89b19c32ce3ab5dc3c",
+      "export_sha256": "199ac28c8614632ac148b40d0ddc0abe0bff96131c9d8f15cae4f6cf7660434c"
+    },
+    {
+      "file": "camera/config/50-pz13-camera.conf",
+      "license": "MIT",
+      "source_sha256": "3bda50edbc8ee43a24b6a586dcee4092ee3d9072e539d0e8ae691162162128ec",
+      "export_sha256": "0d8a20753befcdb678b417e35f6844254843498cfa17b10d28c6a68c44db0496"
+    },
+    {
+      "file": "camera/config/70-pz13-camera.rules",
+      "license": "MIT",
+      "source_sha256": "a4128140787bf10c42097fbc584fa99ceba3bec3f354c46f2d14092e5faa9f58",
+      "export_sha256": "7b4e2323c5c11ef0e785605414faffea8ba626c1b76238c68ad3fc24930660c5"
+    },
+    {
+      "file": "camera/config/PKGBUILD.in",
+      "license": "MIT",
+      "source_sha256": "2ddb9ae7ddc4beaf44a3210da59b96c538ae031d90beb6b2e1d5a0540e5798ef",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "bef473157149c84b66e18acb515ee85754decd7832cdcbd89008c6d00143f8f0"
+    },
+    {
+      "file": "camera/config/org.local.PZ13Camera.desktop",
+      "license": "MIT",
+      "source_sha256": "90a12946d47c4edbd685440e06143d1c302b1950eebe15d6ba518bb315e4e26c",
+      "export_sha256": "0b936dc1887aa7f8c229b44be0a61121f1127db6c41a25f93e979532e8dad887"
+    },
+    {
+      "file": "camera/config/pz13-camera.service",
+      "license": "MIT",
+      "source_sha256": "cfefe296e61bc80c2dbb226018928f6b2749eb0208c716c3dcbb06626e14544b",
+      "export_sha256": "fbcbb2838e98243c86a1af6b738803bcb5d19dd842baf23e963ab212ca5a11e5"
+    },
+    {
+      "file": "camera/drivers/camss/Makefile",
+      "license": "GPL-2.0-only",
+      "source_sha256": "fd97a347dac6bd19cc4b48f2e20718ec0647f4e47a4dd33e564be1810e0a231d",
+      "export_sha256": "fd97a347dac6bd19cc4b48f2e20718ec0647f4e47a4dd33e564be1810e0a231d"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-340.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "75c352a85330a813fb02271e0f52208b380b8e6b002fcdfd7a291ac191848658",
+      "export_sha256": "75c352a85330a813fb02271e0f52208b380b8e6b002fcdfd7a291ac191848658"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-4-1.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "12e2907fbc8aa5e09670e2169ac93cd103795d07dfad9be3c00598ad91420f64",
+      "export_sha256": "12e2907fbc8aa5e09670e2169ac93cd103795d07dfad9be3c00598ad91420f64"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-4-7.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "de87454462a015d7a01a2d29f63da4793f5953d62c2038f446b66e7149c31973",
+      "export_sha256": "de87454462a015d7a01a2d29f63da4793f5953d62c2038f446b66e7149c31973"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-680.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "7e5c8bbd6fe7ff9bfcb6bfbf6cba9ae07445f9f340a2477b3558de2001e540db",
+      "export_sha256": "7e5c8bbd6fe7ff9bfcb6bfbf6cba9ae07445f9f340a2477b3558de2001e540db"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-gen1.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "973bb1c556229fa190dcdb9e77cdc98fae3b964df3bb97af650fc0c0c4392d7f",
+      "export_sha256": "973bb1c556229fa190dcdb9e77cdc98fae3b964df3bb97af650fc0c0c4392d7f"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-gen2.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "b12324980ee9759e34f6591f3dc6669c1dd70ec16859e50d177929953e60b3c0",
+      "export_sha256": "b12324980ee9759e34f6591f3dc6669c1dd70ec16859e50d177929953e60b3c0"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-gen2.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "aa06ec13ac34c76ee71f646dea5b3e7fc98d6d3fc6e19b137eacb1ee37ad6a49",
+      "export_sha256": "aa06ec13ac34c76ee71f646dea5b3e7fc98d6d3fc6e19b137eacb1ee37ad6a49"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-gen3.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "bf9d0a39dacf71733e724435af94fcab01386f54ad873e0225b952072d369fa9",
+      "export_sha256": "bf9d0a39dacf71733e724435af94fcab01386f54ad873e0225b952072d369fa9"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid-gen3.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "059c9bdf11de22f39f3abeff2bf780eb66eb0d553fb7f9dc6f2ca55a74ee5e57",
+      "export_sha256": "059c9bdf11de22f39f3abeff2bf780eb66eb0d553fb7f9dc6f2ca55a74ee5e57"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "2779a9a96469ed4e1e30da2802951b26f0626cba8eb2dac99594b0ba3badf1c2",
+      "export_sha256": "2779a9a96469ed4e1e30da2802951b26f0626cba8eb2dac99594b0ba3badf1c2"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csid.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "d02f5b58c54cb5fdc0d937f9deb7d91cba8e9f3b105f5c49d47e4499c0cd0ece",
+      "export_sha256": "d02f5b58c54cb5fdc0d937f9deb7d91cba8e9f3b105f5c49d47e4499c0cd0ece"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csiphy-2ph-1-0.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "370181d484c6284820e867089b72ec4e2e7d21becce512cbf0902db9f1e8080f",
+      "export_sha256": "370181d484c6284820e867089b72ec4e2e7d21becce512cbf0902db9f1e8080f"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csiphy-3ph-1-0.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "2efb66ee4285d4863cc5955c87429f2d5ae9371e07a6b10d26b74c88fe88ff60",
+      "export_sha256": "2efb66ee4285d4863cc5955c87429f2d5ae9371e07a6b10d26b74c88fe88ff60"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csiphy.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "9694bc604c745f17ebe7962752af510b3657030560b3597aabdde2c970da6eab",
+      "export_sha256": "9694bc604c745f17ebe7962752af510b3657030560b3597aabdde2c970da6eab"
+    },
+    {
+      "file": "camera/drivers/camss/camss-csiphy.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "b07b8ac6e5911c4d8a7f35e5a4937e4735d1845aca22622898cbab910cdbe51a",
+      "export_sha256": "b07b8ac6e5911c4d8a7f35e5a4937e4735d1845aca22622898cbab910cdbe51a"
+    },
+    {
+      "file": "camera/drivers/camss/camss-format.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "6241fd017d136af2d2a8483c7811d1338e8a5ede65b499a953efc0885c43f53d",
+      "export_sha256": "6241fd017d136af2d2a8483c7811d1338e8a5ede65b499a953efc0885c43f53d"
+    },
+    {
+      "file": "camera/drivers/camss/camss-format.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "6c777565a3cf5e90a6380dc2ab11753759c509ac2fb2a2b8c6e3a4de679d2b36",
+      "export_sha256": "6c777565a3cf5e90a6380dc2ab11753759c509ac2fb2a2b8c6e3a4de679d2b36"
+    },
+    {
+      "file": "camera/drivers/camss/camss-ispif.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "e24b81817abbca48a81e12285867e585a76b5e116de175edf2fc4b725b744baa",
+      "export_sha256": "e24b81817abbca48a81e12285867e585a76b5e116de175edf2fc4b725b744baa"
+    },
+    {
+      "file": "camera/drivers/camss/camss-ispif.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "36045eece5c4b3e98a35a68fcfed569d588b52a0b80bd80439245ba6e1906842",
+      "export_sha256": "36045eece5c4b3e98a35a68fcfed569d588b52a0b80bd80439245ba6e1906842"
+    },
+    {
+      "file": "camera/drivers/camss/camss-tpg-gen1.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "7def09f8c4f44720b72a19fa98ee92b611dc66f0e0dab365d4b95a5e3cf8faef",
+      "export_sha256": "7def09f8c4f44720b72a19fa98ee92b611dc66f0e0dab365d4b95a5e3cf8faef"
+    },
+    {
+      "file": "camera/drivers/camss/camss-tpg.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "f17719e34631e91a780aafcc288526dd1682372d70d4aa991f75ccafc498aaaa",
+      "export_sha256": "f17719e34631e91a780aafcc288526dd1682372d70d4aa991f75ccafc498aaaa"
+    },
+    {
+      "file": "camera/drivers/camss/camss-tpg.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "4a9b6e4e2b859661134d462a02556c9573c756e1c9bc88ef9656e528950671ab",
+      "export_sha256": "4a9b6e4e2b859661134d462a02556c9573c756e1c9bc88ef9656e528950671ab"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-17x.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "e9a8f613f6dffc849af29c262adb6a7ee59e289f3896d4c11d89b453acc44dbd",
+      "export_sha256": "e9a8f613f6dffc849af29c262adb6a7ee59e289f3896d4c11d89b453acc44dbd"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-340.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "e2668fe9d8e590cc5922d92a01cb1001ac79477c9f31330c4580639350150170",
+      "export_sha256": "e2668fe9d8e590cc5922d92a01cb1001ac79477c9f31330c4580639350150170"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-4-1.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "b2aa4150cddedd87c6be180a70d44d9a86eba75a8022f36533537c0d0aa47be7",
+      "export_sha256": "b2aa4150cddedd87c6be180a70d44d9a86eba75a8022f36533537c0d0aa47be7"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-4-7.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "50f4f0eecbab9b9b1359bd35bcf574ce5ece9b0e5d01103d924681cfaa7b3e58",
+      "export_sha256": "50f4f0eecbab9b9b1359bd35bcf574ce5ece9b0e5d01103d924681cfaa7b3e58"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-4-8.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "d95684c0f18b53ec0d7385fd0a62d5757db1d02cd7bcddcf9ee7e9b8ef7b1eb1",
+      "export_sha256": "d95684c0f18b53ec0d7385fd0a62d5757db1d02cd7bcddcf9ee7e9b8ef7b1eb1"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-480.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "923f8e6bf779e62555ce24f46ae40b35417dc86b147dcc7d3b326528e6111a4d",
+      "export_sha256": "923f8e6bf779e62555ce24f46ae40b35417dc86b147dcc7d3b326528e6111a4d"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-680.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "c5e1b8b57c0aca5cf2d0d92bbd47cf9513f4aac70bb3385f4c7c2e7d8c414375",
+      "export_sha256": "c5e1b8b57c0aca5cf2d0d92bbd47cf9513f4aac70bb3385f4c7c2e7d8c414375"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-gen1.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "4ea6d35ea13ef50cc25b5bdc00ecb92361bc8b69da5828186989368d442f22ba",
+      "export_sha256": "4ea6d35ea13ef50cc25b5bdc00ecb92361bc8b69da5828186989368d442f22ba"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-gen1.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "ca014d421ab7d93ceb01005d415953c65bc483f9991937d9a5681a92cc3cb8a8",
+      "export_sha256": "ca014d421ab7d93ceb01005d415953c65bc483f9991937d9a5681a92cc3cb8a8"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-gen3.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "8944ab518964bba7d705f8fe057c3e4a04cd75bf832ed3b7926d3f6343e76255",
+      "export_sha256": "8944ab518964bba7d705f8fe057c3e4a04cd75bf832ed3b7926d3f6343e76255"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-vbif.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "f11e75cb2e52d9afa6ee374d6dda30d50857a0daea68aab3926943318d7aada8",
+      "export_sha256": "f11e75cb2e52d9afa6ee374d6dda30d50857a0daea68aab3926943318d7aada8"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe-vbif.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "69642214067893253c6da1e32c7ad11f83f66b3d48158bbc34fa86d96d969cb6",
+      "export_sha256": "69642214067893253c6da1e32c7ad11f83f66b3d48158bbc34fa86d96d969cb6"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "820ab0f9309d3c2b66cd842761b69ab7a455c2f0c86eaed39fa24f77d46cb85e",
+      "export_sha256": "820ab0f9309d3c2b66cd842761b69ab7a455c2f0c86eaed39fa24f77d46cb85e"
+    },
+    {
+      "file": "camera/drivers/camss/camss-vfe.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "6879bfd289381821ab1a0cfe21b94eb014b7a4d96e6c7930531a839a298019f7",
+      "export_sha256": "6879bfd289381821ab1a0cfe21b94eb014b7a4d96e6c7930531a839a298019f7"
+    },
+    {
+      "file": "camera/drivers/camss/camss-video.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "13c9e3deb738aa5fc687ef77cc5f4d100ffe6c5d6f75d01b3a1b98d13b9cab8f",
+      "export_sha256": "13c9e3deb738aa5fc687ef77cc5f4d100ffe6c5d6f75d01b3a1b98d13b9cab8f"
+    },
+    {
+      "file": "camera/drivers/camss/camss-video.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "41486e598a4cf33fb7340810767b065cf4d31ba2d2f105462adbe83b54b5675f",
+      "export_sha256": "41486e598a4cf33fb7340810767b065cf4d31ba2d2f105462adbe83b54b5675f"
+    },
+    {
+      "file": "camera/drivers/camss/camss.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "b455b676d23ea0945e39c2e74447b369de1fe2e47ba512754da701135c6692c9",
+      "export_sha256": "b455b676d23ea0945e39c2e74447b369de1fe2e47ba512754da701135c6692c9"
+    },
+    {
+      "file": "camera/drivers/camss/camss.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "3cb68b2fb9789d5a4b15a6e0db9a82486fddb9a3b6f1cddf23ec42aad03ef2b0",
+      "export_sha256": "3cb68b2fb9789d5a4b15a6e0db9a82486fddb9a3b6f1cddf23ec42aad03ef2b0"
+    },
+    {
+      "file": "camera/drivers/camss/pz13-dual-tree-guard.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "51d41808b450d40e8b11df96efc8613690da314ff9c6c16f13fcd25423a0ea6c",
+      "export_sha256": "813a4f00eb56eea61b4f103ce78eb8f6df59f5ec498afb3ccd2546f2ae4053f1"
+    },
+    {
+      "file": "camera/drivers/pz13-camera-lifecycle.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "543d1209a1a25db5a8de72cd10d20ac784c796f957541eeca87dd3ae039cfb3f",
+      "export_sha256": "543d1209a1a25db5a8de72cd10d20ac784c796f957541eeca87dd3ae039cfb3f"
+    },
+    {
+      "file": "camera/drivers/pz13-dual-tree-guard.h",
+      "license": "GPL-2.0-only",
+      "source_sha256": "51d41808b450d40e8b11df96efc8613690da314ff9c6c16f13fcd25423a0ea6c",
+      "export_sha256": "649029e33246e60d92f8e4290cd019649d7ac34fdc43d26e7cb98ca1f69162f3"
+    },
+    {
+      "file": "camera/drivers/pz13_cci_dual_test.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "3740701a443a898808e2173d33fadb0f5e7273faf607bee6bb1be323074265f0",
+      "export_sha256": "3740701a443a898808e2173d33fadb0f5e7273faf607bee6bb1be323074265f0"
+    },
+    {
+      "file": "camera/drivers/pz13_front_dual_test.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "bf93f7449b539571c247a124d68b5baf88d0ecd2007f5479b6b56ecbf1614813",
+      "export_sha256": "bf93f7449b539571c247a124d68b5baf88d0ecd2007f5479b6b56ecbf1614813"
+    },
+    {
+      "file": "camera/drivers/pz13_rear_dual_test.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "75295e3b39ba3d81af3d389a409107c80b5e7e81e39af81ac536039dca8eb472",
+      "export_sha256": "75295e3b39ba3d81af3d389a409107c80b5e7e81e39af81ac536039dca8eb472"
+    },
+    {
+      "file": "keyboard/pz13-hotkeys.py",
+      "license": "GPL-3.0-only",
+      "source_sha256": "cecc4c67fd25ac4ae727bb47862f48fa6764985a6987d4236ce3addecb270826",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "a9af03956394bfadb420d505c2315178bccfe3e154f0df88f7c0acef824562af"
+    },
+    {
+      "file": "keyboard/pz13-hotkeys.service",
+      "license": "GPL-3.0-only",
+      "source_sha256": "44bb356bba2dccd21dc05f5f7f5b8dda6b19642cf0c4d4d53049f1409405bf41",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "44a5c0c35095bc25fdd30a5b7d24986360a4bfe3e96b7a87dd7d7d3f33cdcd9b"
+    },
+    {
+      "file": "keyboard/pz13-keyboard-init.py",
+      "license": "GPL-3.0-only",
+      "source_sha256": "0beaeca5d798daebeaff874325141a7bc7a77abe1a7ce6d4a982c3cfc1809571",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "5763d8b12dfb2f146bce9713f26c844f2cc51dcc9ab81af32dabc14715340574"
+    },
+    {
+      "file": "packages/libcamera-pz13/60-pz13-libcamera.conf",
+      "license": "MIT",
+      "source_sha256": "1c8b37f94c14b654d6700ea8a5709264d7a0dd330fbe5bcab68e21e440aa3ce9",
+      "export_sha256": "06962fd5dffda57225dd972a3043a780a1ceafa3ead43bc8f8584031dcf68e87"
+    },
+    {
+      "file": "packages/libcamera-pz13/PKGBUILD.in",
+      "license": "MIT",
+      "source_sha256": "bd21d9aa0ddb1e13f4be94dbd82058eea1bde6fc7c2550a020d3f3028965905f",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "917fc5421f5b95387a057c92f4b44c5b3cc4c8325117c5eaf4be35c5b8ca52ae"
+    },
+    {
+      "file": "packages/libcamera-pz13/libcamera.patch",
+      "license": "LGPL-2.1-or-later AND CC0-1.0",
+      "source_sha256": "b27e95bf4e1cf99ba6581c7d0d8b631db44bfe93615d3dc783b9d4af79dedf20",
+      "export_sha256": "b27e95bf4e1cf99ba6581c7d0d8b631db44bfe93615d3dc783b9d4af79dedf20"
+    },
+    {
+      "file": "packages/libcamera-pz13/pz13_af.h",
+      "license": "LGPL-2.1-or-later",
+      "source_sha256": "e24811c84e038705c51721c42560368c518af8808fa86475108542310e188382",
+      "export_sha256": "e24811c84e038705c51721c42560368c518af8808fa86475108542310e188382"
+    },
+    {
+      "file": "packages/libcamera-pz13/pz13_focus_measure.h",
+      "license": "LGPL-2.1-or-later",
+      "source_sha256": "b188e71db1fd29cfa4cb922df59653f5ef68d2177d7bee2e50515a8de9eb60b9",
+      "export_sha256": "b188e71db1fd29cfa4cb922df59653f5ef68d2177d7bee2e50515a8de9eb60b9"
+    },
+    {
+      "file": "packages/libcamera-pz13/test-af.cpp",
+      "license": "LGPL-2.1-or-later",
+      "source_sha256": "0ac32e13aa23ddfcc3f8017b27bb440f90fc6e8ab5b0b1e402d0c8d1ac667e9a",
+      "export_sha256": "0ac32e13aa23ddfcc3f8017b27bb440f90fc6e8ab5b0b1e402d0c8d1ac667e9a"
+    },
+    {
+      "file": "packages/pz13-support/PKGBUILD.in",
+      "license": "MIT",
+      "source_sha256": "48205973c886e12a4e0481ed3ccb9f1c091d61bd3a8b6a9033de6b736e2434de",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "7c46c741865915920c24393105816fde9a57fca0e9760b0e9018cc61f5f53466"
+    },
+    {
+      "file": "patches/hid-over-i2c-reset-delays.patch",
+      "license": "GPL-2.0-only",
+      "source_sha256": "5f0c22f21be95e50f0389150fe5dc60a51bc3bb67546db359c5d4d7c6741cfa4",
+      "export_sha256": "5f0c22f21be95e50f0389150fe5dc60a51bc3bb67546db359c5d4d7c6741cfa4"
+    },
+    {
+      "file": "patches/i2c-qcom-cci-reset-completion.patch",
+      "license": "GPL-2.0-only",
+      "source_sha256": "215f1cd3f6052a1e9d69034dea318336705e500c15d4432f5a07bc565d7d9def",
+      "export_sha256": "215f1cd3f6052a1e9d69034dea318336705e500c15d4432f5a07bc565d7d9def"
+    },
+    {
+      "file": "patches/omarchy-arm-kernel-reboot-check.patch",
+      "license": "MIT",
+      "source_sha256": "a7158870bd3228077faa861a5c6920e6d4c171a8ab9971dd1341eaecef3f3b1e",
+      "export_sha256": "a7158870bd3228077faa861a5c6920e6d4c171a8ab9971dd1341eaecef3f3b1e"
+    },
+    {
+      "file": "power/pz13-power-menu",
+      "license": "MIT",
+      "source_sha256": "f41e1a3a2add85e9a540feeccddb43027fbc854bbd0c3d0dbe723f374a2a5f46",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "5e4a7c34f2b7554f365617c4842ffe95c9341e454cfe8ce9c7aaf7fa95e314a2"
+    },
+    {
+      "file": "power/pz13-resume-time",
+      "license": "MIT",
+      "source_sha256": "bf6e1d7715908fdd14265ae38e9272167a973bf31f72daa6bd9879cb2d2307fd",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "49e586ab2a707b3e84e020f518bfd3b2fe04f9915a7d33067eeda895c7b8f693"
+    },
+    {
+      "file": "scripts/build-pz13-support.py",
+      "license": "MIT",
+      "source_sha256": "b2eda45783b4333ebf2126d2d6c08c04022d15ee2ac7932e3a530fb7132714e2",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "ee54b42f30c4cad93c4cd3a71597a0875a91f596f7dd9c26d395ba44a1ecf254"
+    },
+    {
+      "file": "scripts/decode-pz13-aop-config.py",
+      "license": "MIT",
+      "source_sha256": "a15eab5c3726418263606d44ae353b8c84d4adfdd81f0a842896a6510740db5b",
+      "export_sha256": "360967e7a83a6d27f33970ac943e9f2d9476d252469250dae42f9c22db1d8e03"
+    },
+    {
+      "file": "scripts/decode-pz13-camera-colour.py",
+      "license": "MIT",
+      "source_sha256": "d30844cf1753b4b61e4a68edbb33176679559154a58d5e0ee8b48a627387c140",
+      "export_sha256": "73fd3317092dd4d8ea78f52f63c7a807de132268bdb70de20e9eb51447fe4a17"
+    },
+    {
+      "file": "scripts/decode-qcom-aeob.py",
+      "license": "MIT",
+      "source_sha256": "21dee5b255158338e600e2e8590da51dc46b16ed6d9fd432d5859b312de33870",
+      "export_sha256": "a121170ce854cdbd26bed44a3e05817c26412abb6838457c873a803d9aa72377"
+    },
+    {
+      "file": "scripts/decode-qcom-sensor-metadata.py",
+      "license": "MIT",
+      "source_sha256": "a658017ea1960c6825738e4260c384cd23e0ed95a498f775ef81e7e53aee9557",
+      "export_sha256": "cbd1d25536e41443c2e04b927e1342193314a5e939fc87aa36ad002487034b30"
+    },
+    {
+      "file": "scripts/export-pz13-support.py",
+      "license": "MIT",
+      "source_sha256": "b39873b382cc6a6b714fe899c8cf3bf04dc04f3f5f3fab425a89572c3604c77b",
+      "origin_kind": "adapted-development-source",
+      "export_sha256": "bd5458327d21ab9401d204e32e06d9b8bb8af9a0579628400829021384a8eff0"
+    },
+    {
+      "file": "scripts/prepare-pz13-front-capture-table.py",
+      "license": "MIT",
+      "source_sha256": "001f565178a8adbfa1e5f53baac0422b68db723fbc38bdc807c568903cf5c8fa",
+      "export_sha256": "9227d826f5b4e1912dd5deead09d6dc7c83e6192890a5170e55deb2e0b0e0fa2"
+    },
+    {
+      "file": "scripts/prepare-pz13-libcamera.py",
+      "license": "MIT",
+      "source_sha256": "67a608be126ea6174bf40f8125bb1a6226d3288e310ea1dc913b892acb435b87",
+      "export_sha256": "3e19531bb3aeca7ebd152404fe0de0607bd6b23256ac5997e3e762d3cddb7536"
+    },
+    {
+      "file": "scripts/prepare-pz13-rear-capture-table.py",
+      "license": "MIT",
+      "source_sha256": "841b55368923351c3c77323f20f73182c186b3a489ed31e7da564874c55168f8",
+      "export_sha256": "3c736e518016fa060961dfa43ddc66bca9e9648aba9fc009e8356479f018eacd"
+    },
+    {
+      "file": "scripts/test-pz13-camera-focus.py",
+      "license": "MIT",
+      "source_sha256": "90f6322bd737925c4d17dc16b83864196c58219ac13c900bbffbd9c5de3242b3",
+      "export_sha256": "e0ea2386f07fb3bef0707ee1561723468b1242de78ac659b54560efa3c730471"
+    },
+    {
+      "file": "tests/test-arm-reboot-check.py",
+      "license": "MIT",
+      "source_sha256": "7b00d520b7029efa1ddf99b9968205674abdee348a599db3cd3a7a128142963b",
+      "export_sha256": "b6494842fd89c3f26a35f5d63efe0597d505ca56998aea2fca788524dd2da9e5"
+    },
+    {
+      "file": "tests/test-camera-lifecycle.c",
+      "license": "GPL-2.0-only",
+      "source_sha256": "62009639bfd060ba8bfe2196bb1831eca0aae11c2cd8c53d11e15bb381b91975",
+      "export_sha256": "0a69a40b43f88b776f3a655f48a7b1dfbd8da9b52a7f4b9985611b2c4f9c7203"
+    }
+  ],
+  "notes": [
+    "Source digests identify selected exported development components; no private media or unit-specific boot-image digests are included.",
+    "New release tools and documentation are original source; file-level licenses are recorded in release-files.json.",
+    "camera-additions.json records the complete semantic delta between the fixed reviewed pen and dual-camera trees, including empty graph nodes.",
+    "Public-source adaptations require their own physical acceptance; recorded development results do not qualify a newly built stack."
+  ]
+}

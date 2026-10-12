@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+"""Do not turn the PZ13 wake-up button press into a second power-menu action."""
+import os
+from pathlib import Path
+import time
+
+
+def just_resumed(marker, boot_id, now_ns):
+    try:
+        saved_boot, saved_time = marker.split()
+        age = now_ns - int(saved_time)
+        return saved_boot == boot_id and 0 <= age < 3_000_000_000
+    except (ValueError, TypeError):
+        return False
+
+
+if __name__ == "__main__":
+    try:
+        marker = Path('/run/pz13-resumed-at').read_text()
+        boot_id = Path('/proc/sys/kernel/random/boot_id').read_text().strip()
+        suppress = just_resumed(marker, boot_id, time.monotonic_ns())
+    except OSError:
+        suppress = False
+    if not suppress:
+        os.execl('/usr/bin/omarchy', 'omarchy', 'menu', 'toggle', 'system')

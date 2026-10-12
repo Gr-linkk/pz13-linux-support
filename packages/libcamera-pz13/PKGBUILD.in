@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: MIT
+# Owner-private PZ13 build: the two reviewed tuning profiles are not redistributable.
+pkgname=libcamera-pz13-local
+pkgver=0.7.2
+pkgrel=4.1
+pkgdesc='Shared ASUS PZ13 camera processing and autofocus, with UVC support'
+arch=('aarch64')
+url='https://libcamera.org/'
+license=('LGPL-2.1-or-later' 'GPL-2.0-or-later' 'BSD-2-Clause' 'BSD-3-Clause'
+         'MIT' 'Apache-2.0' 'CC0-1.0' 'LicenseRef-Private-Sensor-Tuning')
+depends=('glibc' 'gnutls' 'libelf' 'libgcc' 'libstdc++' 'libunwind' 'libyaml'
+         'libyuv' 'systemd-libs' 'libudev.so' 'sh' 'glib2' 'gstreamer'
+         'gst-plugins-base-libs' 'gtest' 'libdrm' 'libevent' 'libjpeg-turbo'
+         'libtiff' 'qt6-base' 'sdl2')
+makedepends=('clang' 'meson' 'ninja' 'pkgconf' 'python-jinja' 'python-ply'
+             'python-pyyaml' 'qt6-tools' 'gst-plugins-base')
+provides=("libcamera=$pkgver" "libcamera-ipa=$pkgver" "libcamera-tools=$pkgver"
+          "gst-plugin-libcamera=$pkgver" 'libcamera.so' 'libcamera-base.so')
+conflicts=('libcamera' 'libcamera-ipa' 'libcamera-tools' 'gst-plugin-libcamera')
+# IPA signatures cover the final ELF bytes; never strip them after signing.
+options=('!strip' '!debug')
+backup=('etc/systemd/user/wireplumber.service.d/60-pz13-libcamera.conf')
+source=('libcamera-pz13.tar.xz' 'ov5675.yaml' 'ov13858.yaml'
+        '60-pz13-libcamera.conf' 'test-af.cpp' 'pz13_af.h' 'pz13_focus_measure.h')
+sha256sums=(@SOURCE_HASHES@)
+
+build() {
+  CC=clang CXX=clang++ meson setup source build --prefix=/usr --libdir=lib \
+    --buildtype=release --wrap-mode=nofallback \
+    -Dpipelines=simple,uvcvideo -Dipas=simple -Dsoftisp-gpu=disabled \
+    -Dcam=enabled -Dqcam=enabled -Dlc-compliance=enabled -Dgstreamer=enabled \
+    -Dv4l2=enabled -Ddocumentation=disabled -Dpycamera=disabled -Dtest=false \
+    -Dtracing=disabled -Dcpp_args=-Wno-error=unused-but-set-global
+  meson compile -C build -j 4
+}
+
+check() {
+  clang++ -std=c++20 -O2 -Wall -Wextra -Werror -fsanitize=address,undefined \
+    test-af.cpp -o test-af
+  ./test-af
+  build/src/apps/ipa-verify/ipa_verify build/src/ipa/simple/ipa_soft_simple.so
+}
+
+package() {
+  DESTDIR="$pkgdir" meson install -C build --no-rebuild
+  install -Dm644 ov5675.yaml "$pkgdir/usr/share/libcamera/ipa/simple/ov5675.yaml"
+  install -Dm644 ov13858.yaml "$pkgdir/usr/share/libcamera/ipa/simple/ov13858.yaml"
+  install -Dm644 60-pz13-libcamera.conf \
+    "$pkgdir/etc/systemd/user/wireplumber.service.d/60-pz13-libcamera.conf"
+  install -Dm644 source/pz13-source-manifest.json \
+    "$pkgdir/usr/share/doc/$pkgname/source-manifest.json"
+  install -Dm644 source/LICENSES/{BSD-2-Clause,BSD-3-Clause,MIT}.txt \
+    -t "$pkgdir/usr/share/licenses/$pkgname/"
+  build/src/apps/ipa-verify/ipa_verify "$pkgdir/usr/lib/libcamera/ipa/ipa_soft_simple.so"
+}

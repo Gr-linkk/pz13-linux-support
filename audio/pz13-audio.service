@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: MIT
+[Unit]
+Description=Initialize the tested PZ13 speaker controller
+After=systemd-udev-trigger.service
+ConditionPathExists=/proc/device-tree/sound/wsa-dai-link
+ConditionPathExists=!/proc/device-tree/sound/wcd-capture-dai-link
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/pz13/pz13-audio-init
+RemainAfterExit=yes
+TimeoutStartSec=30
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

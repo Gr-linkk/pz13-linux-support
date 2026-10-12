@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "license": "GPL-2.0-only",
+  "input_sha256": "3025d4b0889aa8850536b3b5980b356d5fc4c4d1ad038fd04abff245dd19c43c",
+  "output_sha256": "4036f4faff05f4f4023d19b68d0be03e66e1ea63a5bdfe54b7e4aa6568ff2ac8",
+  "remove_nodes": [],
+  "set_nodes": {
+    "/": {
+      "pz13,camera-test-layout": "6475616c2d763100"
+    },
+    "/soc@0/cci@ac16000": {
+      "compatible": "71636f6d2c78316538303130302d6363690071636f6d2c6d736d383939362d63636900",
+      "reg": "000000000ac160000000000000001000",
+      "interrupts": "000000000000010f00000001",
+      "clocks": "000001c800000005000001c80000000e000001c80000000b",
+      "clock-names": "63616d6e6f635f61786900637061735f6168620063636900",
+      "assigned-clocks": "000001c80000000b",
+      "assigned-clock-rates": "023c3460",
+      "power-domains": "000001c800000005",
+      "pinctrl-0": "000001e2",
+      "pinctrl-1": "000001e3",
+      "pinctrl-names": "64656661756c7400736c65657000",
+      "#address-cells": "00000001",
+      "#size-cells": "00000000",
+      "status": "6f6b617900"
+    },
+    "/soc@0/cci@ac16000/i2c-bus@1": {
+      "reg": "00000001",
+      "clock-frequency": "00061a80",
+      "#address-cells": "00000001",
+      "#size-cells": "00000000"
+    },
+    "/soc@0/cci@ac16000/i2c-bus@1/camera@36": {
+      "pinctrl-names": "64656661756c7400736c65657000",
+      "pinctrl-1": "000001e5",
+      "pinctrl-0": "000001e4",
+      "power-gpios": "000000560000000600000000",
+      "reset-line-gpios": "00000056000000ed00000000",
+      "b5-supply": "000001d1",
+      "m3-supply": "000001e6",
+      "power-domains": "000001c800000005",
+      "clock-names": "6d636c6b00",
+      "clocks": "000001c80000004f",
+      "compatible": "707a31332c66726f6e742d636170747572652d7465737400",
+      "reg": "00000036",
+      "orientation": "00000000"
+    },
+    "/soc@0/cci@ac16000/i2c-bus@1/camera@36/port/endpoint": {
+      "phandle": "000001e0",
+      "bus-type": "00000004",
+      "data-lanes": "0000000000000001",
+      "clock-lanes": "00000007",
+      "link-frequencies": "000000001ad27480",
+      "remote-endpoint": "000001e1"
+    },
+    "/soc@0/cci@ac16000/i2c-bus@0": {
+      "reg": "00000000",
+      "clock-frequency": "00061a80",
+      "#address-cells": "00000001",
+      "#size-cells": "00000000"
+    },
+    "/soc@0/cci@ac15000": {
+      "status": "6f6b617900",
+      "#size-cells": "00000000",
+      "#address-cells": "00000001",
+      "pinctrl-names": "64656661756c7400736c65657000",
+      "pinctrl-1": "000001cc",
+      "pinctrl-0": "000001cb",
+      "power-domains": "000001c800000005",
+      "assigned-clock-rates": "023c3460",
+      "assigned-clocks": "000001c800000009",
+      "clock-names": "63616d6e6f635f61786900637061735f6168620063636900",
+      "clocks": "000001c800000005000001c80000000e000001c800000009",
+      "interrupts": "00000000000001cc00000001",
+      "reg": "000000000ac150000000000000001000",
+      "compatible": "71636f6d2c78316538303130302d6363690071636f6d2c6d736d383939362d63636900"
+    },
+    "/soc@0/cci@ac15000/i2c-bus@1": {
+      "#size-cells": "00000000",
+      "#address-cells": "00000001",
+      "clock-frequency": "00061a80",
+      "reg": "00000001"
+    },
+    "/soc@0/cci@ac15000/i2c-bus@0": {
+      "#size-cells": "00000000",
+      "#address-cells": "00000001",
+      "clock-frequency": "00061a80",
+      "reg": "00000000"
+    },
+    "/soc@0/cci@ac15000/i2c-bus@0/camera@36": {
+      "orientation": "00000001",
+      "reg": "00000036",
+      "compatible": "707a31332c726561722d636170747572652d7465737400",
+      "clocks": "000001c800000047",
+      "clock-names": "6d636c6b00",
+      "power-domains": "000001c800000005",
+      "m2-supply": "000001cd",
+      "m4-supply": "000001ce",
+      "m5-supply": "000001cf",
+      "m6-supply": "000001d0",
+      "b5-supply": "000001d1",
+      "b7-supply": "000001d2",
+      "reset-line-gpios": "000000560000006d00000000",
+      "pinctrl-0": "000001d3",
+      "pinctrl-1": "000001d4",
+      "pinctrl-names": "64656661756c7400736c65657000"
+    },
+    "/soc@0/cci@ac15000/i2c-bus@0/camera@36/port/endpoint": {
+      "remote-endpoint": "000001d6",
+      "link-frequencies": "00000000202fbf00",
+      "clock-lanes": "00000007",
+      "data-lanes": "00000000000000010000000200000003",
+      "bus-type": "00000004",
+      "phandle": "000001d5"
+    },
+    "/soc@0/isp@acb7000": {
+      "vdd-csiphy-1p2-supply": "000001ca",
+      "vdd-csiphy-0p8-supply": "000001c9",
+      "status": "6f6b617900",
+      "power-domain-names": "6966653000746f7000",
+      "power-domains": "000001c800000001000001c800000005",
+      "iommus": "00000032000008000000006000000032000008600000006000000032000018600000006000000032000018e00000000000000032000019a000000020",
+      "interconnect-names": "6168620068665f6d6e6f630073665f6d6e6f630073665f6963705f6d6e6f6300",
+      "interconnects": "000000350000000300000003000000360000000500000003000000f80000000100000007000000190000000100000007000000f80000000300000007000000190000000100000007000000f80000000200000007000000190000000100000007",
+      "interrupt-names": "637369643000637369643100637369643200637369645f6c6974653000637369645f6c69746531006373697068793000637369706879340076666530007666655f6c69746530007666655f6c6974653100",
+      "interrupts": "00000000000001d00000000100000000000001d20000000100000000000001af0000000100000000000001d40000000100000000000001670000000100000000000001dd00000001000000000000007a0000000100000000000001d10000000100000000000001d500000001000000000000016800000001",
+      "clock-names": "63616d6e6f635f6e72745f6178690063616d6e6f635f72745f61786900636f72655f61686200637061735f61686200637061735f666173745f61686200637061735f7666653000637061735f7666655f6c697465006373696400637369645f6373697068795f7278006373697068793000637369706879305f74696d6572006373697068793400637369706879345f74696d6572006763635f6178695f6866006763635f6178695f7366007666653000766665305f666173745f616862007666655f6c697465007666655f6c6974655f616862007666655f6c6974655f637068795f7278007666655f6c6974655f6373696400",
+      "clocks": "000001c800000004000001c800000005000001c80000000d000001c80000000e000001c800000010000001c800000011000001c800000013000001c800000023000001c800000025000001c800000026000001c800000017000001c80000002a000001c80000001f00000033000000110000003300000012000001c800000031000001c800000034000001c80000003a000001c800000039000001c80000003c000001c80000003d",
+      "reg-names": "637369643000637369643100637369643200637369645f6c6974653000637369645f6c6974653100637369645f77726170706572006373697068793000637369706879340063736974706730006373697470673100637369747067320076666530007666655f6c69746530007666655f6c6974653100",
+      "reg": "000000000acb70000000000000002000000000000acb90000000000000002000000000000acbb0000000000000002000000000000acc60000000000000001000000000000acca0000000000000001000000000000acb60000000000000001000000000000ace40000000000000002000000000000acec0000000000000004000000000000acf60000000000000001000000000000acf70000000000000001000000000000acf80000000000000001000000000000ac62000000000000000f000000000000acc70000000000000002000000000000accb0000000000000002000",
+      "compatible": "707a31332c78317034323130302d6475616c2d636170747572652d63616d737300"
+    },
+    "/soc@0/isp@acb7000/ports": {
+      "#size-cells": "00000000",
+      "#address-cells": "00000001"
+    },
+    "/soc@0/isp@acb7000/ports/port@1": {
+      "#size-cells": "00000000",
+      "#address-cells": "00000001",
+      "reg": "00000001"
+    },
+    "/soc@0/isp@acb7000/ports/port@1/endpoint": {
+      "phandle": "000001e1",
+      "bus-type": "00000004",
+      "data-lanes": "0000000000000001",
+      "clock-lanes": "00000007",
+      "remote-endpoint": "000001e0"
+    },
+    "/soc@0/isp@acb7000/ports/port@0": {
+      "#size-cells": "00000000",
+      "#address-cells": "00000001",
+      "reg": "00000000"
+    },
+    "/soc@0/isp@acb7000/ports/port@0/endpoint": {
+      "remote-endpoint": "000001d5",
+      "clock-lanes": "00000007",
+      "data-lanes": "00000000000000010000000200000003",
+      "bus-type": "00000004",
+      "phandle": "000001d6"
+    },
+    "/soc@0/clock-controller@ade0000": {
+      "phandle": "000001c8",
+      "#power-domain-cells": "00000001",
+      "#reset-cells": "00000001",
+      "#clock-cells": "00000001",
+      "required-opps": "0000002500000025",
+      "power-domains": "000000310000000a0000003100000006",
+      "clocks": "0000003300000010000000280000011100000029",
+      "reg": "000000000ade00000000000000020000",
+      "compatible": "71636f6d2c78317034323130302d63616d636300"
+    },
+    "/soc@0/pinctrl@f100000/pz13-front-id-sleep-pins": {
+      "phandle": "000001e5"
+    },
+    "/soc@0/pinctrl@f100000/pz13-front-id-sleep-pins/mclk-pins": {
+      "pins": "6770696f31303000",
+      "function": "6770696f00",
+      "drive-strength": "00000002",
+      "bias-pull-down": "",
+      "input-enable": ""
+    },
+    "/soc@0/pinctrl@f100000/pz13-front-id-sleep-pins/control-pins": {
+      "pins": "6770696f323337006770696f3600",
+      "function": "6770696f00",
+      "drive-strength": "00000002",
+      "bias-disable": "",
+      "output-low": ""
+    },
+    "/soc@0/pinctrl@f100000/pz13-front-id-active-pins": {
+      "phandle": "000001e4"
+    },
+    "/soc@0/pinctrl@f100000/pz13-front-id-active-pins/reset-pins": {
+      "pins": "6770696f32333700",
+      "function": "6770696f00",
+      "drive-strength": "00000002",
+      "bias-disable": "",
+      "output-low": ""
+    },
+    "/soc@0/pinctrl@f100000/pz13-front-id-active-pins/mclk-pins": {
+      "pins": "6770696f31303000",
+      "function": "63616d5f616f6e00",
+      "drive-strength": "00000002",
+      "bias-disable": ""
+    },
+    "/soc@0/pinctrl@f100000/pz13-front-id-active-pins/enable-pins": {
+      "pins": "6770696f3600",
+      "function": "6770696f00",
+      "drive-strength": "00000002",
+      "bias-disable": "",
+      "output-low": ""
+    },
+    "/soc@0/pinctrl@f100000/pz13-cci1-sleep-pins": {
+      "phandle": "000001e3",
+      "pins": "6770696f323335006770696f32333600",
+      "function": "616f6e5f63636900",
+      "drive-strength": "00000002",
+      "bias-pull-down": ""
+    },
+    "/soc@0/pinctrl@f100000/pz13-cci1-default-pins": {
+      "phandle": "000001e2",
+      "pins": "6770696f323335006770696f32333600",
+      "function": "616f6e5f63636900",
+      "drive-strength": "00000002",
+      "bias-pull-up": ""
+    },
+    "/soc@0/pinctrl@f100000/pz13-rear-id-sleep-pins": {
+      "phandle": "000001d4"
+    },
+    "/soc@0/pinctrl@f100000/pz13-rear-id-sleep-pins/reset-pins": {
+      "output-low": "",
+      "bias-disable": "",
+      "drive-strength": "00000002",
+      "function": "6770696f00",
+      "pins": "6770696f31303900"
+    },
+    "/soc@0/pinctrl@f100000/pz13-rear-id-sleep-pins/mclk-pins": {
+      "input-enable": "",
+      "bias-pull-down": "",
+      "drive-strength": "00000002",
+      "function": "6770696f00",
+      "pins": "6770696f393600"
+    },
+    "/soc@0/pinctrl@f100000/pz13-rear-id-active-pins": {
+      "phandle": "000001d3"
+    },
+    "/soc@0/pinctrl@f100000/pz13-rear-id-active-pins/reset-pins": {
+      "output-low": "",
+      "bias-disable": "",
+      "drive-strength": "00000002",
+      "function": "6770696f00",
+      "pins": "6770696f31303900"
+    },
+    "/soc@0/pinctrl@f100000/pz13-rear-id-active-pins/mclk-pins": {
+      "bias-disable": "",
+      "drive-strength": "00000002",
+      "function": "63616d5f6d636c6b00",
+      "pins": "6770696f393600"
+    },
+    "/soc@0/pinctrl@f100000/pz13-cci0-sleep-pins": {
+      "bias-pull-down": "",
+      "drive-strength": "00000002",
+      "function": "6363695f69326300",
+      "pins": "6770696f313031006770696f31303200",
+      "phandle": "000001cc"
+    },
+    "/soc@0/pinctrl@f100000/pz13-cci0-default-pins": {
+      "bias-pull-up": "",
+      "drive-strength": "00000002",
+      "function": "6363695f69326300",
+      "pins": "6770696f313031006770696f31303200",
+      "phandle": "000001cb"
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8550": {
+      "vdd-l6-l7-supply": "00000189",
+      "vdd-l5-l16-supply": "00000188",
+      "qcom,pmic-id": "6200",
+      "compatible": "71636f6d2c706d383535302d72706d682d726567756c61746f727300"
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8550/ldo7": {
+      "qcom,always-wait-for-ack": "",
+      "regulator-allowed-modes": "00000003",
+      "regulator-max-microvolt": "002ab980",
+      "regulator-min-microvolt": "002ab980",
+      "regulator-name": "707a31335f726561725f6c37625f32703800",
+      "phandle": "000001d2"
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8550/ldo5": {
+      "qcom,always-wait-for-ack": "",
+      "regulator-allowed-modes": "00000003",
+      "regulator-max-microvolt": "002dc6c0",
+      "regulator-min-microvolt": "002dc6c0",
+      "regulator-name": "707a31335f726561725f6c35625f33703000",
+      "phandle": "000001d1"
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8010": {
+      "vdd-l6-supply": "00000187",
+      "vdd-l5-supply": "00000188",
+      "vdd-l3-l4-supply": "00000187",
+      "vdd-l1-l2-supply": "0000018a",
+      "qcom,pmic-id": "6d00",
+      "compatible": "71636f6d2c706d383031302d72706d682d726567756c61746f727300"
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8010/ldo3": {
+      "phandle": "000001e6",
+      "regulator-name": "707a31335f66726f6e745f6c336d5f31703800",
+      "regulator-min-microvolt": "001b7740",
+      "regulator-max-microvolt": "001b7740",
+      "regulator-allowed-modes": "00000003",
+      "qcom,always-wait-for-ack": ""
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8010/ldo6": {
+      "qcom,always-wait-for-ack": "",
+      "regulator-allowed-modes": "00000003",
+      "regulator-max-microvolt": "001b7740",
+      "regulator-min-microvolt": "001b7740",
+      "regulator-name": "707a31335f726561725f6c366d5f31703800",
+      "phandle": "000001d0"
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8010/ldo5": {
+      "qcom,always-wait-for-ack": "",
+      "regulator-allowed-modes": "00000003",
+      "regulator-max-microvolt": "002ab980",
+      "regulator-min-microvolt": "002ab980",
+      "regulator-name": "707a31335f726561725f6c356d5f32703800",
+      "phandle": "000001cf"
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8010/ldo4": {
+      "qcom,always-wait-for-ack": "",
+      "regulator-allowed-modes": "00000003",
+      "regulator-max-microvolt": "001b7740",
+      "regulator-min-microvolt": "001b7740",
+      "regulator-name": "707a31335f726561725f6c346d5f31703800",
+      "phandle": "000001ce"
+    },
+    "/soc@0/rsc@17500000/pz13-rear-pm8010/ldo2": {
+      "qcom,always-wait-for-ack": "",
+      "regulator-allowed-modes": "00000003",
+      "regulator-max-microvolt": "00124f80",
+      "regulator-min-microvolt": "00124f80",
+      "regulator-name": "707a31335f726561725f6c326d5f31703200",
+      "phandle": "000001cd"
+    },
+    "/soc@0/rsc@17500000/regulators-1/ldo1": {
+      "qcom,always-wait-for-ack": "",
+      "phandle": "000001ca"
+    },
+    "/soc@0/rsc@17500000/regulators-1/ldo2": {
+      "qcom,always-wait-for-ack": "",
+      "phandle": "000001c9"
+    },
+    "/soc@0/cci@ac16000/i2c-bus@1/camera@36/port": {},
+    "/soc@0/cci@ac15000/i2c-bus@0/camera@36/port": {}
+  },
+  "remove_properties": {}
+}

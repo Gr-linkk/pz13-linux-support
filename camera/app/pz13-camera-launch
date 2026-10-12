@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+set -euo pipefail
+if ! systemctl is-active --quiet pz13-camera.service; then
+    notify-send 'PZ13 Camera' 'Camera support is not active in this boot. See the PZ13 daily-use guide.'
+    exit 1
+fi
+if [[ ! -r /dev/dma_heap/system || ! -w /dev/dma_heap/system ]]; then
+    notify-send 'PZ13 Camera' 'Camera memory access is unavailable. Wake and unlock the local desktop, then try again.'
+    exit 1
+fi
+exec 9>"${XDG_RUNTIME_DIR:?}/pz13-camera.lock"
+if ! flock -n 9; then
+    notify-send 'PZ13 Camera' 'PZ13 Camera is already open.'
+    exit 1
+fi
+exec /usr/bin/python3 /usr/local/lib/pz13-camera/pz13-camera.py \
+    --profiles /usr/local/lib/pz13-camera/profiles "$@"

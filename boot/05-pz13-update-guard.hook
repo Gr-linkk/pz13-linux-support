@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: MIT
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+Description = Verifying PZ13 boot support and saving recovery snapshot...
+When = PreTransaction
+Exec = /usr/local/sbin/pz13-update-guard before
+AbortOnFail
